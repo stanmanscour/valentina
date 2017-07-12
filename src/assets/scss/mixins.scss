@@ -1,0 +1,12 @@
+$browser-context: 16; // Default
+@function em($pixels, $context: $browser-context) {
+    @return #{$pixels/$context}em;
+}
+
+.val-font {
+    font-family: 'Circular Std';
+}
+
+.val-subFont {
+    font-family: 'Lato';
+}
