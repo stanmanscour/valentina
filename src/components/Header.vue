@@ -128,7 +128,6 @@
           @extend .val-font;
           font-size: 15px;
           font-weight: 200;
-          margin-top: 1px;
           span {
             display: none;
             @media screen and (min-width: em(768)) {
