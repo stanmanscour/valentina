@@ -3,7 +3,7 @@
     <val-header></val-header>
     <div class="val__intro">
       <h1 class="val__intro--title">prenom.io</h1>
-      <p class="val__intro--desc">Un outil pour faciliter l’écoute de la musique du net</p>
+      <p class="val__intro--desc">Lorem ipsum dolor sit amet, consectetur adipiscing</p>
     </div>
     <val-collection></val-collection>
     <ul class="val__container" v-masonry transition-duration="0.3s" item-selector=".val__container">

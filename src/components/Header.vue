@@ -4,13 +4,13 @@
     <div class="header__inputs">
       <div class="header__inputs--research">
         <label v-show="labelResearchVisible">Rechercher <span>dans ma musique</span></label>
-        <input @focus="research(true)" @blur="research(false)" type="text">
-        <input v-show="!labelResearchVisible" type="submit">
+        <input v-model="valResearch" @focus="toggleResearch(true)" @blur="tryResearch" type="text">
+        <input @click="research" v-show="!labelResearchVisible" type="submit">
       </div>
       <div class="header__inputs--add">
         <label v-show="labelAddVisible">Ajouter <span>de la musique</span></label>
-        <input @focus="add(true)" @blur="add(false)" type="text">
-        <input v-show="!labelAddVisible" type="submit">
+        <input v-model="valAdd" @focus="toggleAdd(true)" @blur="tryAdd" type="text">
+        <input @click="add" v-show="!labelAddVisible" type="submit">
       </div>
     </div>
     <button class="header__toolsBtn"><span></span></button>
@@ -22,16 +22,37 @@
     data: function() {
       return {
         labelResearchVisible: true,
-        labelAddVisible: true
+        labelAddVisible: true,
+        valResearch: '',
+        valAdd: ''
       }
     },
     methods: {
-      research(boolean) {
-        // vérifier que l'input n'est pas vide, si il l'est ...
+      toggleResearch(boolean) {
         this.labelResearchVisible = !boolean;
       },
-      add(boolean) {
+      tryResearch() {
+        if (this.valResearch === '') { // rien 
+          this.toggleResearch(false);
+        } else { // une recherche
+          // r
+        }
+      },
+      research() {
+        console.log("Je recherche: '" + this.valResearch + "'");
+      },
+      toggleAdd(boolean) {
         this.labelAddVisible = !boolean;
+      },
+      tryAdd() {
+        if (this.valAdd === '') {
+          this.toggleAdd(false);
+        } else {
+          // r
+        }
+      },
+      add() {
+        console.log("J'ajoute: '" + this.valAdd + "'")
       }
     }
   }
@@ -94,6 +115,13 @@
         justify-content: center;
         align-items: center;
         background-color: white;
+        padding-left: 0px;
+
+        @media screen and (min-width: em(768)){
+          align-items: flex-start;
+          padding-left: 20px;
+        }
+
         label {
           position: absolute;
           color: black;
@@ -101,13 +129,11 @@
           font-size: 15px;
           font-weight: 200;
           margin-top: 1px;
-
-          @media screen and (min-width: em(768)){
-
-          }
-
           span {
             display: none;
+            @media screen and (min-width: em(768)) {
+              display: inline;
+            }
           }
         }
         input[type="text"] {
@@ -137,6 +163,9 @@
           background-size: contain;
           background-color: transparent;
           color: transparent;
+          @media screen and (min-width: em(768)) {
+            right: 16px;
+          }
           &:focus {
             outline: none;
             opacity: .2;
@@ -144,9 +173,7 @@
         }
       }
       &--add {
-        input[type="text"] {
-          
-        }
+        input[type="text"] {}
         input[type="submit"] {
           background-image: url("/src/assets/icons/add.svg");
         }
