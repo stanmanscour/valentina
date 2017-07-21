@@ -1,7 +1,7 @@
 <template>
     <div class="player">
-        <iframe v-if="media === 'youtube'" class="player__youtube" id="ytplayer" type="text/html" width="300" height="300" :src="song.src + '?rel=0&autoplay=1'" frameborder="0" />
-        <iframe v-if="media === 'soundcloud'" class="player__soundcloud" width="100%" height="450" scrolling="no" frameborder="no" :src="song.src"></iframe>
+        <iframe v-if="media === 'youtube'" class="player__youtube" id="ytplayer" type="text/html" width="300" height="300" :src="'https://www.youtube.com/embed/'+song.src + '?rel=0&autoplay=1'" frameborder="0" />
+        <iframe v-if="media === 'soundcloud'" class="player__soundcloud" width="100%" height="450" scrolling="no" frameborder="no" :src="'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/'+song.src+'&amp;auto_play=false&amp;&amp;color=0066cc'"></iframe>
     </div>
 </template>
 
