@@ -6,18 +6,17 @@
       <p class="val__intro--desc">Lorem ipsum dolor sit amet, consectetur adipiscing</p>
     </div>
     <val-collection :songCollection="songCollection"></val-collection>
-    <ul class="val__container" v-masonry transition-duration="0.3s" item-selector=".val__container">
-      <!-- <li v-masonry-tile v-for="video in videos" class="val__container" style="width:20%; padding: 15px; box-sizing: border-box;">
-        <val-video :video="video"></val-video>
-      </li> -->
-    </ul>
+    <transition name="fade">
+      <val-player :song="song" v-if="listening"></val-player>
+    </transition>
+    
   
   
   </div>
 </template>
 
 <script>
-
+  import { EventBus } from './main';
   import { Songs } from './songs.js';
 
   // templates
@@ -25,21 +24,36 @@
   import Video from './components/Video.vue';
   import Header from './components/Header.vue';
   import Collection from './components/Collection.vue';
+  import Player from './components/Player.vue';
 
   
   export default {
     name: 'app',
     data() {
       return {
-        songCollection: Songs
+        songCollection: Songs,
+
+        // var
+        listening: false,
+        song: null
       }
     },
     methods: {
-
+      listenTo(song){
+        EventBus.$emit('playThis', song);
+        this.listening = true;
+      }
     },
     components: {
       valHeader: Header,
-      valCollection: Collection
+      valCollection: Collection,
+      valPlayer: Player
+    },
+    created(){
+      EventBus.$on('listenToThis', song => {
+        this.listening = false;
+        this.listenTo(song);
+      })
     }
   }
 </script>

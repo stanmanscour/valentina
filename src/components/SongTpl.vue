@@ -12,13 +12,15 @@
                 <span class="song__info__more--time">2:45</span>
             </div>
         </div>
-        <a class="song__action" href="#">
+        <a @click.prevent="play" class="song__action" href="#">
             <img src="/src/assets/icons/play.svg">
         </a>
     </article>
 </template>
 
 <script>
+    import { EventBus } from './../main';
+
     export default {
         data: function() {
             return {
@@ -29,6 +31,9 @@
         methods: {
             hoverSong(boolean) {
                 this.songHovered = boolean;
+            },
+            play(){
+                EventBus.$emit('listenToThis', this.song);
             }
         }
     }

@@ -1,12 +1,28 @@
+// functions
 $browser-context: 16; // Default
 @function em($pixels, $context: $browser-context) {
     @return #{$pixels/$context}em;
 }
 
+// fonts
 .val-font {
     font-family: 'Circular Std';
 }
 
 .val-subFont {
     font-family: 'Lato';
+}
+
+// anim
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity .5s
+}
+
+.fade-enter,
+.fade-leave-to
+/* .fade-leave-active in <2.1.8 */
+
+{
+    opacity: 0
 }
