@@ -56,9 +56,16 @@ $val-background: #00A885;
 }
 
 .fade-enter,
-.fade-leave-to
-/* .fade-leave-active in <2.1.8 */
-
-{
+.fade-leave-to {
     opacity: 0
+}
+
+.goUp-enter-active,
+.goUp-leave-active {
+    transition: all .4s ease;
+}
+
+.goUp-enter,
+.goUp-leave-to {
+    bottom: -50px;
 }

@@ -2,7 +2,7 @@
   <div id="app" class="val">
     <val-header></val-header>
     <transition name="fade">
-      <val-formAdd :songSrc="songSrc" v-if="addFormVisible"></val-formAdd>
+      <val-formAdd :objSongInit="objSongInit" v-if="addFormVisible"></val-formAdd>
     </transition>
     <div class="val__intro">
       <h1 class="val__intro--title">prenom.io</h1>
@@ -12,12 +12,14 @@
     <transition name="fade">
       <val-player :song="song" v-if="listening"></val-player>
     </transition>
-    <div v-if="errorVisible" class="val__info">
-      <p class="val__info--errorMsg">{{ errorMsg }}</p>
-      <a class="val__info--close" href="#" @click.prevent="closeError">
-        <img src="src/assets/icons/closeWhite.svg">
-      </a>
-    </div>
+    <transition name="goUp">
+      <div v-if="errorVisible" class="val__info">
+        <p class="val__info--errorMsg">{{ errorMsg }}</p>
+        <a class="val__info--close" href="#" @click.prevent="closeError">
+          <img src="src/assets/icons/closeWhite.svg">
+        </a>
+      </div>
+    </transition>
   
   
   
@@ -53,7 +55,7 @@
         song: null,
         errorVisible: false,
         errorMsg: '',
-        songSrc: '',
+        objSongInit: {},
   
         newSong: {
           counter: 0,
@@ -81,9 +83,15 @@
         this.errorVisible = false;
       },
       showAddForm(obj) { // Fais apparaître le formulaire d'ajout de sons
+        
         this.addFormVisible = true;
-        this.songSrc = obj.src;
-        EventBus.$emit('createAddForm', obj);
+        //this.songSrc = obj.src;
+        this.objSongInit = obj;
+
+        //console.log("createAddForm 1");
+        //EventBus.$emit('createAddForm', {obj});
+        
+        
       },
       closeAddForm(){ // Ferme le formulaire d'ajout de sons
         this.addFormVisible = false;
@@ -105,16 +113,16 @@
       valFormAdd: FormAdd
     },
     created() {
-      EventBus.$on('listenToThis', song => {
+      EventBus.$on('listenToThis', song => { // démarre le son
         this.listenTo(song);
       })
-      EventBus.$on('addFromHeader', newSong => {
+      EventBus.$on('addFromHeader', newSong => { // ouvre le formulaire depuis le header
         this.showAddForm(newSong);
       })
-      EventBus.$on('error', error => {
+      EventBus.$on('error', error => { // affiche l'erreur
         this.showError(error);
       })
-      EventBus.$on('closeAddForm', this.closeAddForm);
+      EventBus.$on('closeAddForm', this.closeAddForm); // ferme le formulaire d'ajout de sons
     }
   }
 </script>
@@ -166,6 +174,7 @@
     padding-right: 30px;
     &--errorMsg {
       @extend .val-font;
+      text-align: center;
       color: white;
       font-size: 13px;
       line-height: 18px;

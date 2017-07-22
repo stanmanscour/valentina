@@ -1,6 +1,6 @@
 <template>
     <div class="formAdd">
-        <a :href="songSrc" target="_blank" rel=”noopener” class="formAdd--previousLink">{{ songSrc }}</a>
+        <a :href="objSongInit.src" target="_blank" rel=”noopener” class="formAdd--previousLink">{{ objSongInit.src }}</a>
         <p class="formAdd--title">Ajouter des infos</p>
         <form class="formAdd__form">
             <div class="formAdd__form__sections">
@@ -26,7 +26,7 @@
             </div>
             <div class="formAdd__form__action">
                 <a class="formAdd__form__action--exit" @click.prevent="closeFormAdd" href="#"><img src="#">Annuler</a>
-                <a class="formAdd__form__action--add" href="#">Ajouter<img src="#"></a>
+                <a class="formAdd__form__action--add" @click.prevent="addSongInfos" href="#">Ajouter<img src="#"></a>
             </div>
         </form>
     </div>
@@ -43,23 +43,25 @@
                 name: '',
                 title: '',
                 genre: '',
-                poster: ''
+                poster: '',
             }
         },
-        props: ['songSrc'],
+        props: ['objSongInit'],
         methods: {
-            createSong(obj) {
-    
+            addSongInfos(){ // add the infos from the form
+                this.objSongInit['name'] = this.name;
+                this.objSongInit['title'] = this.title;
+                this.objSongInit['genre'] = this.genre;
+                this.objSongInit['poster'] = this.poster;
+
+                console.log(this.objSongInit);
             },
-            closeFormAdd() {
+            closeFormAdd() { // close and exit the form
                 EventBus.$emit('closeAddForm');
             }
         },
-        created() {
-            EventBus.$on('createAddForm', obj => {
-                this.addLink = obj.src;
-                this.createSong(obj);
-            })
+        mounted(){
+            console.log(this.objSongInit)
         }
     }
 </script>

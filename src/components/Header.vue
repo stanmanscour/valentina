@@ -75,7 +75,6 @@
       getMedia() {
         var string = this.valAdd;
         var media = this.verifyUrl(string);
-        console.log(media);
         return media;
       },
 

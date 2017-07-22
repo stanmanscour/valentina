@@ -37,6 +37,8 @@
         &__soundcloud {
             opacity: 0;
             visibility: hidden;
+            position: fixed;
+            top: -400px;
 
             @media screen and (min-width: em(738)) {
                 visibility: visible;
