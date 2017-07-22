@@ -1,6 +1,6 @@
 <template>
     <div class="formAdd">
-        <p class="formAdd--previousLink">{{ addLink }}</p>
+        <a :href="songSrc" target="_blank" rel=”noopener” class="formAdd--previousLink">{{ songSrc }}</a>
         <p class="formAdd--title">Ajouter des infos</p>
         <form class="formAdd__form">
             <div class="formAdd__form__sections">
@@ -25,7 +25,7 @@
                 </div>
             </div>
             <div class="formAdd__form__action">
-                <a class="formAdd__form__action--exit" href="#"><img src="#">Annuler</a>
+                <a class="formAdd__form__action--exit" @click.prevent="closeFormAdd" href="#"><img src="#">Annuler</a>
                 <a class="formAdd__form__action--add" href="#">Ajouter<img src="#"></a>
             </div>
         </form>
@@ -33,26 +33,32 @@
 </template>
 
 <script>
-    import { EventBus } from './../main';
-
+    import {
+        EventBus
+    } from './../main';
+    
     export default {
         data: function() {
             return {
-                addLink: 'https://www.youtube.com/watch?v=atAOWRzkHRs',
                 name: '',
                 title: '',
                 genre: '',
                 poster: ''
             }
         },
+        props: ['songSrc'],
         methods: {
-            createObj(obj){
-
+            createSong(obj) {
+    
+            },
+            closeFormAdd() {
+                EventBus.$emit('closeAddForm');
             }
         },
-        created(){
+        created() {
             EventBus.$on('createAddForm', obj => {
-                console.log(obj);
+                this.addLink = obj.src;
+                this.createSong(obj);
             })
         }
     }
@@ -90,18 +96,20 @@
         }
         &--previousLink {
             @extend .val-font;
-            font-size: 12px;
             opacity: 0.4;
             color: white;
             margin-bottom: 10px;
             line-height: 18px;
+            text-decoration: none;
+            font-size: 11px;
         }
         &--title {
             @extend .val-font;
             font-size: 15px;
             color: white;
             font-weight: 200;
-            margin-bottom: 10px;
+            margin-top: 10px;
+            margin-bottom: 5px;
         }
         &__form {
             &__sections {

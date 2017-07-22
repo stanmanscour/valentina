@@ -2,7 +2,7 @@
   <div id="app" class="val">
     <val-header></val-header>
     <transition name="fade">
-      <val-formAdd v-if="addFormVisible"></val-formAdd>
+      <val-formAdd :songSrc="songSrc" v-if="addFormVisible"></val-formAdd>
     </transition>
     <div class="val__intro">
       <h1 class="val__intro--title">prenom.io</h1>
@@ -53,6 +53,7 @@
         song: null,
         errorVisible: false,
         errorMsg: '',
+        songSrc: '',
   
         newSong: {
           counter: 0,
@@ -67,19 +68,28 @@
         EventBus.$emit('playThis', song);
         this.listening = true;
       },
-      showError(string) { // Affiche les erreurs reçus par l'Event Bus
+      showError(string) { // Affiche les erreurs reçus par l'Event Bus 
         this.errorMsg = string;
         this.errorVisible = true;
+
+        var self = this;
+        setTimeout(function(){
+          self.errorVisible = false;
+        }, 5000);
       },
-      closeError() {
+      closeError() { // Ferme l'erreur
         this.errorVisible = false;
       },
-      showAddForm(obj) {
-        console.log('showAddForm');
+      showAddForm(obj) { // Fais apparaître le formulaire d'ajout de sons
         this.addFormVisible = true;
+        this.songSrc = obj.src;
         EventBus.$emit('createAddForm', obj);
       },
-      submitDb() {
+      closeAddForm(){ // Ferme le formulaire d'ajout de sons
+        this.addFormVisible = false;
+        this.songSrc = '';
+      },
+      submitDb() { 
         this.$http.post('https://valentina-7c291.firebaseio.com/data.json', this.newSong)
           .then(response => {
             console.log(response);
@@ -104,6 +114,7 @@
       EventBus.$on('error', error => {
         this.showError(error);
       })
+      EventBus.$on('closeAddForm', this.closeAddForm);
     }
   }
 </script>
