@@ -12,6 +12,12 @@
     <transition name="fade">
       <val-player :song="song" v-if="listening"></val-player>
     </transition>
+    <div v-if="errorVisible" class="val__info">
+      <p class="val__info--errorMsg">{{ errorMsg }}</p>
+      <a class="val__info--close" href="#" @click="closeError">
+        <img src="#">
+      </a>
+    </div>
   
   
   
@@ -45,6 +51,9 @@
         listening: false,
         addFormVisible: false,
         song: null,
+        errorVisible: false,
+        errorMsg: '',
+        
         newSong: {
           counter: 0,
           artist: '',
@@ -57,6 +66,13 @@
       listenTo(song) {
         EventBus.$emit('playThis', song);
         this.listening = true;
+      },
+      showError(string) { // Affiche les erreurs reçus par l'Event Bus
+        this.errorMsg = string;
+        this.errorVisible = true;
+      },
+      closeError(){
+        this.errorVisible = false;
       },
       showAddForm(obj) {
         console.log('showAddForm');
@@ -84,6 +100,9 @@
       })
       EventBus.$on('addFromHeader', newSong => {
         this.showAddForm(newSong);
+      })
+      EventBus.$on('error', error => {
+        this.showError(error);
       })
     }
   }
@@ -119,6 +138,32 @@
       color: white;
       text-align: center;
       font-weight: 300;
+    }
+  }
+
+  .val__info {
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: #FD5B5B;
+    padding-left: 30px;
+    padding-right: 30px;
+
+    &--errorMsg {
+      @extend .val-font;
+      color: white;
+      font-size: 13px;
+      line-height: 18px;
+      padding-top: 15px;
+      padding-bottom: 15px;
+    }
+    &--close {
+      margin-left: 10px;
     }
   }
 </style>
