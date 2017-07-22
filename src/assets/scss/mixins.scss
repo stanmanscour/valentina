@@ -4,6 +4,7 @@ $browser-context: 16; // Default
     @return #{$pixels/$context}em;
 }
 
+$val-background: #00A885;
 // fonts
 .val-font {
     font-family: 'Circular Std';
@@ -11,6 +12,41 @@ $browser-context: 16; // Default
 
 .val-subFont {
     font-family: 'Lato';
+}
+
+// inputs
+.val-form-group {
+    height: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    position: relative;
+    &-label {
+        position: absolute;
+        left: 0px;
+        top: 3px;
+        z-index: 1;
+        @extend .val-font;
+        font-size: 23px;
+        color: #5EC8B1;
+    }
+    &-input {
+        position: absolute;
+        left: 0px;
+        margin: 0;
+        height: 30px;
+        border: none;
+        background-color: transparent;
+        box-sizing: border-box;
+        z-index: 2;
+        outline: none;
+        @extend .val-font;
+        font-size: 23px;
+        transition: all 0.3s ease-in-out;
+        color: white;
+        &::-webkit-input-placeholder {
+            color: #5EC8B1;
+        }
+    }
 }
 
 // anim

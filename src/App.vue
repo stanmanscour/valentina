@@ -1,20 +1,12 @@
 <template>
   <div id="app" class="val">
     <val-header></val-header>
+    <transition name="fade">
+      <val-formAdd v-if="addFormVisible"></val-formAdd>
+    </transition>
     <div class="val__intro">
       <h1 class="val__intro--title">prenom.io</h1>
       <p class="val__intro--desc">Lorem ipsum dolor sit amet, consectetur adipiscing</p>
-      <div class="testingDb">
-  
-        <form>
-          <label>artist</label>
-          <input type="text" v-model="newSong.artist">
-          <label>title</label>
-          <input type="text" v-model="newSong.title">
-          <input type="submit" @click.prevent="submitDb">
-        </form>
-  
-      </div>
     </div>
     <val-collection :songCollection="songCollection"></val-collection>
     <transition name="fade">
@@ -40,6 +32,7 @@
   import Header from './components/Header.vue';
   import Collection from './components/Collection.vue';
   import Player from './components/Player.vue';
+  import FormAdd from './components/FormAdd.vue';
   
   
   export default {
@@ -50,14 +43,13 @@
   
         // var
         listening: false,
+        addFormVisible: false,
         song: null,
         newSong: {
           counter: 0,
           artist: '',
           title: '',
-          src: '',
           poster: '',
-          media: ''
         }
       }
     },
@@ -65,6 +57,11 @@
       listenTo(song) {
         EventBus.$emit('playThis', song);
         this.listening = true;
+      },
+      showAddForm(obj) {
+        console.log('showAddForm');
+        this.addFormVisible = true;
+        EventBus.$emit('createAddForm', obj);
       },
       submitDb() {
         this.$http.post('https://valentina-7c291.firebaseio.com/data.json', this.newSong)
@@ -78,11 +75,15 @@
     components: {
       valHeader: Header,
       valCollection: Collection,
-      valPlayer: Player
+      valPlayer: Player,
+      valFormAdd: FormAdd
     },
     created() {
       EventBus.$on('listenToThis', song => {
         this.listenTo(song);
+      })
+      EventBus.$on('addFromHeader', newSong => {
+        this.showAddForm(newSong);
       })
     }
   }

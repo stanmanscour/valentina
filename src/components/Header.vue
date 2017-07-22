@@ -18,6 +18,8 @@
 </template>
 
 <script>
+  import { EventBus } from './../main';
+
   export default {
     data: function() {
       return {
@@ -46,27 +48,46 @@
       },
       verifyUrl(string) {
         var substringYT = "youtube",
-            substringSNCLD = "soundcloud",
-            response;
-
-        if ( string.includes(substringYT) ){
-          return response = 'youtube';
-        } else if ( string.includes(substringSNCLD)){
-          return response = 'soundcloud';
+          substringSNCLD = "soundcloud",
+          response;
+  
+        if (string.includes(substringYT)) {
+          const newSong = {
+            src: string,
+            media: 'youtube',
+            counter: 0
+          };
+          return newSong;
+        } else if (string.includes(substringSNCLD)) {
+          const newSong = {
+            src: string,
+            media: 'soundcloud',
+            counter: 0
+          };
+          return newSong;
         } else {
-          return error;
+          return 'error';
         }
-
+  
         return response;
       },
-      getMedia(){
+
+      getMedia() {
         var string = this.valAdd;
-        var url = this.verifyUrl(string);
-        console.log(url);
+        var media = this.verifyUrl(string);
+        console.log(media);
+        return media;
       },
+
       add() {
-        var newSong = {};
-        this.getMedia();
+        var newSong = this.getMedia();
+        if (typeof newSong === "object"){
+          EventBus.$emit('addFromHeader', newSong);
+        } else {
+          let error = "L'url ne semble pas venir de Youtube ou de Soundcloud";
+          EventBus.$emit('error', error)
+        }
+
       }
     }
   }
