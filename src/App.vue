@@ -14,8 +14,8 @@
     </transition>
     <div v-if="errorVisible" class="val__info">
       <p class="val__info--errorMsg">{{ errorMsg }}</p>
-      <a class="val__info--close" href="#" @click="closeError">
-        <img src="#">
+      <a class="val__info--close" href="#" @click.prevent="closeError">
+        <img src="src/assets/icons/closeWhite.svg">
       </a>
     </div>
   
@@ -53,7 +53,7 @@
         song: null,
         errorVisible: false,
         errorMsg: '',
-        
+  
         newSong: {
           counter: 0,
           artist: '',
@@ -71,7 +71,7 @@
         this.errorMsg = string;
         this.errorVisible = true;
       },
-      closeError(){
+      closeError() {
         this.errorVisible = false;
       },
       showAddForm(obj) {
@@ -140,7 +140,7 @@
       font-weight: 300;
     }
   }
-
+  
   .val__info {
     position: fixed;
     bottom: 0px;
@@ -153,7 +153,6 @@
     background-color: #FD5B5B;
     padding-left: 30px;
     padding-right: 30px;
-
     &--errorMsg {
       @extend .val-font;
       color: white;
@@ -164,6 +163,16 @@
     }
     &--close {
       margin-left: 10px;
+      width: 18px;
+      height: 13px;
+
+      &:hover {
+        opacity: 0.7;
+      }
+      img {
+        width: 100%;
+        height: 100%;
+      }
     }
   }
 </style>
