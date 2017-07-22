@@ -1,7 +1,9 @@
-import Vue from 'vue'
-import App from './App.vue'
+import Vue from 'vue';
+import VueResource from 'vue-resource';
+import App from './App.vue';
 
-var VueResource = require('vue-resource');
+
+//var VueResource = require('vue-resource');
 Vue.use(VueResource);
 
 export const EventBus = new Vue();

@@ -32,11 +32,7 @@
         this.labelResearchVisible = !boolean;
       },
       tryResearch() {
-        if (this.valResearch === '') { // rien 
-          this.toggleResearch(false);
-        } else { // une recherche
-          // r
-        }
+        this.valResearch === '' ? this.toggleResearch(false) : '';
       },
       research() {
         console.log("Je recherche: '" + this.valResearch + "'");
@@ -45,14 +41,32 @@
         this.labelAddVisible = !boolean;
       },
       tryAdd() {
-        if (this.valAdd === '') {
-          this.toggleAdd(false);
+        this.valAdd === '' ? this.toggleAdd(false) : '';
+  
+      },
+      verifyUrl(string) {
+        var substringYT = "youtube",
+            substringSNCLD = "soundcloud",
+            response;
+
+        if ( string.includes(substringYT) ){
+          return response = 'youtube';
+        } else if ( string.includes(substringSNCLD)){
+          return response = 'soundcloud';
         } else {
-          // r
+          return error;
         }
+
+        return response;
+      },
+      getMedia(){
+        var string = this.valAdd;
+        var url = this.verifyUrl(string);
+        console.log(url);
       },
       add() {
-        console.log("J'ajoute: '" + this.valAdd + "'")
+        var newSong = {};
+        this.getMedia();
       }
     }
   }
@@ -70,8 +84,7 @@
     z-index: 20;
     padding-left: 3%;
     padding-right: 3%;
-
-    @media screen and (min-width: em(1024)){
+    @media screen and (min-width: em(1024)) {
       max-width: 1024px;
       padding: 0;
       left: calc(50% - 512px);
@@ -122,12 +135,10 @@
         align-items: center;
         background-color: white;
         padding-left: 0px;
-
-        @media screen and (min-width: em(768)){
+        @media screen and (min-width: em(768)) {
           align-items: flex-start;
           padding-left: 20px;
         }
-
         label {
           position: absolute;
           color: black;
