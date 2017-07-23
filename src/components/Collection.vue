@@ -28,9 +28,6 @@
                     songsCounter.push(song.counter);
                     songsLogd.push( Math.log(song.counter) );
                 })
-                console.log(songsCounter);
-                console.log(songsLogd);
-                //console.log(this.songCollection);
             },
             calculateHeight(counter){
                 //let calcul = Math.random() * (200 - 250) + 200;

@@ -7,7 +7,7 @@
                 <div class="formAdd__form__sections__firstSection">
                     <div class="val-form-group">
                         <!--<label class="val-form-group-label">Artiste</label>-->
-                        <input class="val-form-group-input" placeholder="Artiste" type="text" v-model="name">
+                        <input class="val-form-group-input" placeholder="Artiste" type="text" v-model="artist">
                     </div>
                     <div class="val-form-group">
                         <!--<label class="val-form-group-label">Titre</label>-->
@@ -40,7 +40,7 @@
     export default {
         data: function() {
             return {
-                name: '',
+                artist: '',
                 title: '',
                 genre: '',
                 poster: '',
@@ -49,19 +49,20 @@
         props: ['objSongInit'],
         methods: {
             addSongInfos(){ // add the infos from the form
-                this.objSongInit['name'] = this.name;
+                this.objSongInit['artist'] = this.artist;
                 this.objSongInit['title'] = this.title;
                 this.objSongInit['genre'] = this.genre;
                 this.objSongInit['poster'] = this.poster;
 
-                console.log(this.objSongInit);
+                this.uploadSong();
+            },
+            uploadSong(){ // emit upload song obj on firebase
+                EventBus.$emit('uploadNewSong', this.objSongInit);
+                this.closeFormAdd();
             },
             closeFormAdd() { // close and exit the form
                 EventBus.$emit('closeAddForm');
             }
-        },
-        mounted(){
-            console.log(this.objSongInit)
         }
     }
 </script>

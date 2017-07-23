@@ -8,6 +8,8 @@
       <h1 class="val__intro--title">prenom.io</h1>
       <p class="val__intro--desc">Lorem ipsum dolor sit amet, consectetur adipiscing</p>
     </div>
+    <val-collection :songCollection="fetchedSongs"></val-collection>
+    <!-- from db -->
     <val-collection :songCollection="songCollection"></val-collection>
     <transition name="fade">
       <val-player :song="song" v-if="listening"></val-player>
@@ -55,6 +57,7 @@
         song: null,
         errorVisible: false,
         errorMsg: '',
+        fetchedSongs: [],
         objSongInit: {},
   
         newSong: {
@@ -66,6 +69,21 @@
       }
     },
     methods: {
+      getSongsFromDb() {
+        //this.fetchedSongs = 
+        console.log('hey');
+        
+        this.$http.get('https://valentina-7c291.firebaseio.com/songs.json').then(response => {
+          return response.json();
+        }).then(data => {
+          //this.fetchedSongs.push(data);
+          for (let key in data){
+            this.fetchedSongs.push(data[key])
+          }
+          console.log(this.fetchedSongs);
+        });
+        //console.log( this.fetchedSongs);
+      },
       listenTo(song) {
         EventBus.$emit('playThis', song);
         this.listening = true;
@@ -73,9 +91,9 @@
       showError(string) { // Affiche les erreurs reçus par l'Event Bus 
         this.errorMsg = string;
         this.errorVisible = true;
-
+  
         var self = this;
-        setTimeout(function(){
+        setTimeout(function() {
           self.errorVisible = false;
         }, 5000);
       },
@@ -83,24 +101,18 @@
         this.errorVisible = false;
       },
       showAddForm(obj) { // Fais apparaître le formulaire d'ajout de sons
-        
         this.addFormVisible = true;
-        //this.songSrc = obj.src;
         this.objSongInit = obj;
-
-        //console.log("createAddForm 1");
-        //EventBus.$emit('createAddForm', {obj});
-        
-        
       },
-      closeAddForm(){ // Ferme le formulaire d'ajout de sons
+      closeAddForm() { // Ferme le formulaire d'ajout de sons
         this.addFormVisible = false;
         this.songSrc = '';
       },
-      submitDb() { 
-        this.$http.post('https://valentina-7c291.firebaseio.com/data.json', this.newSong)
+      uploadOnDb(obj) {
+        this.$http.post('https://valentina-7c291.firebaseio.com/songs.json', obj)
           .then(response => {
             console.log(response);
+            this.fetchedSongs = response.body;
           }, error => {
             console.log(error);
           })
@@ -113,16 +125,27 @@
       valFormAdd: FormAdd
     },
     created() {
+  
+      this.getSongsFromDb(); // get from firebase
+  
       EventBus.$on('listenToThis', song => { // démarre le son
         this.listenTo(song);
       })
+  
       EventBus.$on('addFromHeader', newSong => { // ouvre le formulaire depuis le header
         this.showAddForm(newSong);
       })
+  
       EventBus.$on('error', error => { // affiche l'erreur
         this.showError(error);
       })
+  
       EventBus.$on('closeAddForm', this.closeAddForm); // ferme le formulaire d'ajout de sons
+  
+      EventBus.$on('uploadNewSong', obj => {
+        this.uploadOnDb(obj);
+      })
+  
     }
   }
 </script>
@@ -185,7 +208,6 @@
       margin-left: 10px;
       width: 18px;
       height: 13px;
-
       &:hover {
         opacity: 0.7;
       }

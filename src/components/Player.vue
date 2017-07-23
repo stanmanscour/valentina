@@ -44,6 +44,7 @@
                 visibility: visible;
                 position: fixed;
                 width: 267px;
+                top: inherit;
                 height: 150px;
                 left: 20px;
                 bottom: 20px;

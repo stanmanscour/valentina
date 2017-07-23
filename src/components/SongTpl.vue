@@ -12,7 +12,7 @@
                 <span class="song__info__more--time">2:45</span>
             </div>
         </div>
-        <a @click.prevent="play" class="song__action" href="#">
+        <a href="#" @click.prevent="play" class="song__action" >
             <img src="/src/assets/icons/play.svg">
         </a>
     </article>
