@@ -46,14 +46,22 @@
         this.valAdd === '' ? this.toggleAdd(false) : '';
   
       },
+      getIdFromYT(url){
+        let id = url.split('https://www.youtube.com/watch?v=');
+        return id[1];
+      },
       verifyUrl(string) {
         var substringYT = "youtube",
           substringSNCLD = "soundcloud",
           response;
   
         if (string.includes(substringYT)) {
+          console.log(string);
+
+          let url = this.getIdFromYT(string);
+          // https://www.youtube.com/watch?v=
           const newSong = {
-            src: string,
+            src: url,
             media: 'youtube',
             counter: 0
           };
