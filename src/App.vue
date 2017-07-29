@@ -8,7 +8,7 @@
       <h1 class="val__intro--title">prenom.io</h1>
       <p class="val__intro--desc">Lorem ipsum dolor sit amet, consectetur adipiscing</p>
     </div>
-    <val-collection :songCollection="fetchedSongs"></val-collection>
+    <val-collection :songCollection="songs"></val-collection>
     <!-- from db -->
     <val-collection :songCollection="songCollection"></val-collection>
     <transition name="fade">
@@ -58,6 +58,7 @@
         errorVisible: false,
         errorMsg: '',
         fetchedSongs: [],
+        songs: [],
         objSongInit: {},
   
         newSong: {
@@ -69,20 +70,18 @@
       }
     },
     methods: {
-      getSongsFromDb() {
-        //this.fetchedSongs = 
-        console.log('hey');
-        
+      getSongsFromDb() { // fetch songs from the db
+  
         this.$http.get('https://valentina-7c291.firebaseio.com/songs.json').then(response => {
           return response.json();
         }).then(data => {
           //this.fetchedSongs.push(data);
-          for (let key in data){
+          for (let key in data) {
             this.fetchedSongs.push(data[key])
           }
-          console.log(this.fetchedSongs);
         });
-        //console.log( this.fetchedSongs);
+
+        this.songs = this.fetchedSongs;
       },
       listenTo(song) {
         EventBus.$emit('playThis', song);
@@ -116,6 +115,25 @@
           }, error => {
             console.log(error);
           })
+      },
+      research(string) { // recherche dans la collection de musique
+
+        var newArr = this.fetchedSongs.filter( item => {
+          if ( item.title.toLowerCase().includes(string) 
+               || item.artist.toLowerCase().includes(string)
+            ){
+            return item;
+          }
+        })
+
+        if (newArr.length > 0){
+          this.songs = newArr;
+        } else {
+          this.showError('pas de musiques comme ça ici bruh');
+        }
+
+        
+        
       }
     },
     components: {
@@ -144,6 +162,10 @@
   
       EventBus.$on('uploadNewSong', obj => {
         this.uploadOnDb(obj);
+      })
+  
+      EventBus.$on('research', research => { // recherche depuis le header;
+        this.research(research);
       })
   
     }

@@ -37,7 +37,8 @@
         this.valResearch === '' ? this.toggleResearch(false) : '';
       },
       research() {
-        console.log("Je recherche: '" + this.valResearch + "'");
+        let string = this.valResearch.toLowerCase();
+        EventBus.$emit('research', string);
       },
       toggleAdd(boolean) {
         this.labelAddVisible = !boolean;
