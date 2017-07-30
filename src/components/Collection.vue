@@ -30,7 +30,6 @@
                 })
             },
             calculateHeight(counter){
-                //let calcul = Math.random() * (200 - 250) + 200;
                 const y = 20;
                 let calcul = 150 + y * Math.log(counter);
                 return calcul + 'px';

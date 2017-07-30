@@ -18,8 +18,10 @@
 </template>
 
 <script>
-  import { EventBus } from './../main';
-
+  import {
+    EventBus
+  } from './../main';
+  
   export default {
     data: function() {
       return {
@@ -47,7 +49,7 @@
         this.valAdd === '' ? this.toggleAdd(false) : '';
   
       },
-      getIdFromYT(url){
+      getIdFromYT(url) {
         let id = url.split('https://www.youtube.com/watch?v=');
         return id[1];
       },
@@ -58,7 +60,7 @@
   
         if (string.includes(substringYT)) {
           console.log(string);
-
+  
           let url = this.getIdFromYT(string);
           // https://www.youtube.com/watch?v=
           const newSong = {
@@ -80,22 +82,22 @@
   
         return response;
       },
-
+  
       getMedia() {
         var string = this.valAdd;
         var media = this.verifyUrl(string);
         return media;
       },
-
+  
       add() {
         var newSong = this.getMedia();
-        if (typeof newSong === "object"){
+        if (typeof newSong === "object") {
           EventBus.$emit('addFromHeader', newSong);
         } else {
           let error = "L'url ne semble pas venir de Youtube ou de Soundcloud";
           EventBus.$emit('error', error)
         }
-
+  
       }
     }
   }
@@ -199,17 +201,20 @@
         }
         input[type="submit"] {
           z-index: 10;
-          right: 10px;
+          right: 0px;
           position: absolute;
-          width: 17px;
-          height: 17px;
+          width: 44px;
+          color: transparent;
+          width: 44px;
+          height: 44px;
           z-index: 30;
           border: none;
-          background-size: contain;
-          background-color: transparent;
-          color: transparent;
+          background-position: 50%;
+          background-size: 20px;
+          background-color: white;
+          background-repeat: no-repeat;
           @media screen and (min-width: em(768)) {
-            right: 16px;
+            //right: 16px;
           }
           &:focus {
             outline: none;
