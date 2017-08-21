@@ -71,7 +71,7 @@
     },
     methods: {
       getSongsFromDb() { // fetch songs from the db
-  
+        this.fetchedSongs = [];
         this.$http.get('https://valentina-7c291.firebaseio.com/songs.json').then(response => {
           return response.json();
         }).then(data => {
@@ -109,9 +109,8 @@
       },
       uploadOnDb(obj) {
         this.$http.post('https://valentina-7c291.firebaseio.com/songs.json', obj)
-          .then(response => {
-            console.log(response);
-            this.fetchedSongs = response.body;
+          .then(() => {
+            this.getSongsFromDb();
           }, error => {
             console.log(error);
           })
