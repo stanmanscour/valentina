@@ -1,6 +1,6 @@
 <template>
   <header class="header">
-    <button class="header__informationBtn"><span></span></button>
+    <router-link to="/about" class="header__informationBtn"><span></span></router-link>
     <div class="header__inputs">
       <div class="header__inputs--research">
         <label v-show="labelResearchVisible">Rechercher <span>dans ma musique</span></label>
@@ -13,7 +13,7 @@
         <input @click="add" v-show="!labelAddVisible" type="submit">
       </div>
     </div>
-    <button class="header__toolsBtn"><span></span></button>
+    <router-link to="" class="header__toolsBtn"><span></span></router-link>
   </header>
 </template>
 

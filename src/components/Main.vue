@@ -1,31 +1,58 @@
 <template>
-  <div id="app" class="val">
+	<div>
+		<val-header></val-header>
+		<transition name="fade">
+      		<val-formAdd :objSongInit="objSongInit" v-if="addFormVisible"></val-formAdd>
+    	</transition>
     
-    
-    <router-view></router-view>
+
+	    <div class="val__intro">
+	      <h1 class="val__intro--title">prenom.io</h1>
+	      <p class="val__intro--desc">Lorem ipsum dolor sit amet, consectetur adipiscing</p>
+	    </div>
+	    
+
+	    <val-collection :songCollection="songs"></val-collection>
+	    <!-- from db -->
+	    <val-collection :songCollection="songCollection"></val-collection>
+
+
+	    <transition name="fade">
+	      <val-player :song="song" v-if="listening"></val-player>
+	    </transition>
+
+
+	    <transition name="goUp">
+	      <div v-if="errorVisible" class="val__info">
+	        <p class="val__info--errorMsg">{{ errorMsg }}</p>
+	        <a class="val__info--close" href="#" @click.prevent="closeError">
+	          <img src="src/assets/icons/closeWhite.svg">
+	        </a>
+	      </div>
+	    </transition>
   
-  </div>
+	</div>
 </template>
 
 <script>
   import {
     EventBus
-  } from './main';
+  } from './../main';
   import {
     Songs
-  } from './songs.js';
+  } from './../songs.js';
   
   // templates
   import Vue from 'vue';
-  import Video from './components/Video.vue';
-  import Header from './components/Header.vue';
-  import Collection from './components/Collection.vue';
-  import Player from './components/Player.vue';
-  import FormAdd from './components/FormAdd.vue';
+  import Video from './Video.vue';
+  import Collection from './Collection.vue';
+  import Player from './Player.vue';
+  import FormAdd from './FormAdd.vue';
+  import Header from './Header.vue';
+
   
   
   export default {
-    name: 'app',
     data() {
       return {
         songCollection: Songs,
@@ -109,16 +136,13 @@
         } else {
           this.showError('pas de musiques comme ça ici bruh');
         }
-
-        
-        
       }
     },
     components: {
-      valHeader: Header,
       valCollection: Collection,
       valPlayer: Player,
-      valFormAdd: FormAdd
+      valFormAdd: FormAdd,
+      valHeader: Header
     },
     created() {
   
@@ -150,4 +174,71 @@
   }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+  @import './../assets/scss/reset.scss';
+  @import './../assets/scss/mixins.scss';
+  body {
+    background-color: #00A885;
+  }
+  
+  .val__intro {
+    margin-top: em(100);
+    width: 100%;
+    &--title {
+      font-size: em(45);
+      @extend .val-font;
+      color: white;
+      font-weight: 500;
+      text-align: center;
+      line-height: 55px;
+      @media screen and (min-width: em(1024)) {
+        font-size: 80px;
+        line-height: 80px;
+      }
+    }
+    &--desc {
+      line-height: 22px;
+      font-size: 14px;
+      @extend .val-subFont;
+      margin-bottom: 0px;
+      color: white;
+      text-align: center;
+      font-weight: 300;
+    }
+  }
+  
+  .val__info {
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: #FD5B5B;
+    padding-left: 30px;
+    padding-right: 30px;
+    &--errorMsg {
+      @extend .val-font;
+      text-align: center;
+      color: white;
+      font-size: 13px;
+      line-height: 18px;
+      padding-top: 15px;
+      padding-bottom: 15px;
+    }
+    &--close {
+      margin-left: 10px;
+      width: 18px;
+      height: 13px;
+      &:hover {
+        opacity: 0.7;
+      }
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+</style>
