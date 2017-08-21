@@ -14,7 +14,7 @@
 
 	    <val-collection :songCollection="songs"></val-collection>
 	    <!-- from db -->
-	    <val-collection :songCollection="songCollection"></val-collection>
+	    
 
 
 	    <transition name="fade">
@@ -38,9 +38,6 @@
   import {
     EventBus
   } from './../main';
-  import {
-    Songs
-  } from './../songs.js';
   
   // templates
   import Vue from 'vue';
@@ -55,9 +52,6 @@
   export default {
     data() {
       return {
-        songCollection: Songs,
-  
-        // var
         listening: false,
         addFormVisible: false,
         song: null,
@@ -175,7 +169,6 @@
 </script>
 
 <style lang="scss">
-  @import './../assets/scss/reset.scss';
   @import './../assets/scss/mixins.scss';
   body {
     background-color: #00A885;
