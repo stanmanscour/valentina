@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="38px" height="38px" viewBox="0 0 38 38" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.1 (44463) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 5</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-23.3%" y="-16.7%" width="146.7%" height="146.7%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Ajouter" transform="translate(-477.000000, -556.000000)" fill-rule="nonzero">
+            <g id="Group-5" transform="translate(481.000000, 558.000000)">
+                <g id="np_play_669096_000000" filter="url(#filter-1)" fill="#FFFFFF">
+                    <path d="M14.7004665,0.150591209 C6.66529788,0.150591209 0.150591209,6.66529788 0.150591209,14.7004665 C0.150591209,22.7370901 6.66529788,29.2503418 14.7004665,29.2503418 C22.7370901,29.2503418 29.2503418,22.7370901 29.2503418,14.7004665 C29.2503418,6.66529788 22.7356352,0.150591209 14.7004665,0.150591209 Z" id="Shape"></path>
+                </g>
+                <path d="M21.1386123,15.0693061 C21.1386123,15.3610287 20.9025611,15.5970719 20.6108465,15.5970719 C20.0233506,15.5970719 19.5827286,15.5970719 19.2889806,15.5970719 C18.9952326,15.5970719 17.7645964,15.5970719 15.5970719,15.5970719 L15.5970719,20.6108465 C15.5970719,20.9025691 15.3610208,21.1386123 15.0693061,21.1386123 C14.7775915,21.1386123 14.5415404,20.9025611 14.5415404,20.6108465 L14.5415404,15.5970719 L9.52776575,15.5970719 C9.23604323,15.5970719 9,15.3610208 9,15.0693061 C9,14.7775915 9.23605115,14.5415404 9.52776575,14.5415404 L14.5415404,14.5415404 L14.5415404,9.52776575 C14.5415404,9.23604323 14.7775915,9 15.0693061,9 C15.3610208,9 15.5970719,9.23605115 15.5970719,9.52776575 L15.5970719,14.5415404 L20.6108465,14.5415404 C20.9025691,14.5415404 21.1386123,14.7775915 21.1386123,15.0693061 Z" id="Shape" fill="#000000" transform="translate(15.069306, 15.069306) rotate(-315.000000) translate(-15.069306, -15.069306) "></path>
+            </g>
+        </g>
+    </g>
+</svg>
