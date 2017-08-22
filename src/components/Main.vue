@@ -7,7 +7,7 @@
     
 
 	    <div class="val__intro">
-	      <h1 class="val__intro--title">prenom.io</h1>
+	      <h1 class="val__intro--title">valentina.io</h1>
 	      <p class="val__intro--desc">Lorem ipsum dolor sit amet, consectetur adipiscing</p>
 	    </div>
 	    
@@ -138,6 +138,7 @@
       valFormAdd: FormAdd,
       valHeader: Header
     },
+
     created() {
   
       this.getSongsFromDb(); // get from firebase
@@ -170,13 +171,13 @@
 
 <style lang="scss">
   @import './../assets/scss/mixins.scss';
-  body {
-    background-color: #00A885;
-  }
-  
+
   .val__intro {
     margin-top: em(100);
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     &--title {
       font-size: em(45);
       @extend .val-font;
@@ -197,6 +198,7 @@
       color: white;
       text-align: center;
       font-weight: 300;
+      max-width: 500px;
     }
   }
   
