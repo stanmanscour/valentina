@@ -11,16 +11,14 @@
 	      <p class="val__intro--desc">Lorem ipsum dolor sit amet, consectetur adipiscing</p>
 	    </div>
 	    
-
 	    <val-collection :songCollection="songs"></val-collection>
 	    <!-- from db -->
 	    
-
-
 	    <transition name="fade">
 	      <val-player :song="song" v-if="listening"></val-player>
 	    </transition>
 
+      <bottomBar></bottomBar>
 
 	    <transition name="goUp">
 	      <div v-if="errorVisible" class="val__info">
@@ -44,10 +42,9 @@
   import Video from './Video.vue';
   import Collection from './Collection.vue';
   import Player from './Player.vue';
+  import bottomBar from './bottomBar.vue';
   import FormAdd from './FormAdd.vue';
   import Header from './Header.vue';
-
-  
   
   export default {
     data() {
@@ -136,7 +133,8 @@
       valCollection: Collection,
       valPlayer: Player,
       valFormAdd: FormAdd,
-      valHeader: Header
+      valHeader: Header,
+      bottomBar: bottomBar
     },
 
     created() {
