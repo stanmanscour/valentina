@@ -13,7 +13,14 @@
       <div class="bottomBar__player__action">
         <a @click.prevent="togglePauseSong" v-if="!paused" href="#" class="bottomBar__player__action--play"><img src="/src/assets/icons/play.svg"></a>
         <a @click.prevent="togglePauseSong" v-if="paused" href="#" class="bottomBar__player__action--pause"><img src="/src/assets/icons/pause.svg"></a>
-        <a @click.prevent="togglePlaylist" href="#" class="bottomBar__player__action--playlist"><img src="/src/assets/icons/playlist.svg"></a>
+        <a @click.prevent="togglePlaylist" href="#" class="bottomBar__player__action__playlist">
+          <template v-if="playlist.length > 0">
+            <transition name="fade">
+            <span class="bottomBar__player__action__playlist--notif">{{ playlist.length }}</span>
+            </transition>
+          </template>
+          <img src="/src/assets/icons/playlist.svg">
+        </a>
       </div>
     </div>
     <div class="bottomBar__playlist">
@@ -215,7 +222,7 @@
             height: 25px;
           }
         }
-        &--playlist {
+        &__playlist {
           width: 25px;
           height: 25px;
           display: flex;
@@ -223,6 +230,24 @@
           justify-content: center;
           align-items: center;
           margin-left: 7px;
+
+          &--notif {
+            position: absolute;
+            color: white;
+            text-align: center;
+            font-size: 12px;
+            @extend .val-font;
+            width: 16px;
+            text-decoration: none;
+            height: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #FF5722;
+            top: 2px;
+            border-radius: 100%;
+          }
 
           img {
             height: 25px;
