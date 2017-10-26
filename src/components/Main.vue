@@ -15,10 +15,12 @@
 	    <!-- from db -->
 	    
 	    <transition name="fade">
-	      <val-player :song="song" v-if="listening"></val-player>
+	      <!-- <val-player :song="song" v-if="listening"></val-player> -->
 	    </transition>
 
-      <bottomBar></bottomBar>
+      <transition name="goUp">
+        <bottomBar v-if="listening"></bottomBar>
+      </transition
 
 	    <transition name="goUp">
 	      <div v-if="errorVisible" class="val__info">

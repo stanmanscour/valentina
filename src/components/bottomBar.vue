@@ -1,5 +1,6 @@
 <template>
-  <div class="bottomBar">
+  <div class="bottomBar" :class="{ active: playlistOpen }">
+    
     <div class="bottomBar__player">
       <img class="bottomBar__player--poster" src="#">
       <div class="bottomBar__player__names">
@@ -10,8 +11,9 @@
         </p>
       </div>
       <div class="bottomBar__player__action">
-        <a v-if="" href="#" class="bottomBar__player__action--play"><img src="/src/assets/icons/play.svg"></a>
-        <a v-if="" href="#" class="bottomBar__player__action--playlist"><img src="/src/assets/icons/playlist.svg"></a>
+        <a @click="togglePauseSong" v-if="!paused" href="#" class="bottomBar__player__action--play"><img src="/src/assets/icons/play.svg"></a>
+        <a @click="togglePauseSong" v-if="paused" href="#" class="bottomBar__player__action--pause"><img src="/src/assets/icons/pause.svg"></a>
+        <a @click="togglePlaylist" href="#" class="bottomBar__player__action--playlist"><img src="/src/assets/icons/playlist.svg"></a>
       </div>
     </div>
     <div class="bottomBar__playlist">
@@ -47,6 +49,10 @@
         </tbody>
       </table>
     </div>
+    <div style="visibility: hidden;">
+      <iframe v-if="media === 'youtube'" class="player__youtube" id="ytplayer" type="text/html" width="300" height="300" :src="'https://www.youtube.com/embed/'+song.src + '?rel=0&autoplay=1'" frameborder="0" />
+      <iframe v-if="media === 'soundcloud'" class="player__soundcloud" width="100%" height="450" scrolling="no" frameborder="no" :src="'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/'+song.src"></iframe>
+    </div>
   </div>
 </template>
 
@@ -54,7 +60,37 @@
   import { EventBus } from './../main';
 
   export default {
-
+    data() {
+      return {
+        playlistOpen: false,
+        media: true,
+        song: null,
+        playlist: [],
+        paused: false
+      }
+    },
+    methods: {
+      togglePlaylist(){
+        this.playlistOpen = !this.playlistOpen;
+      },
+      playSong(){
+        this.media = this.song.media;
+        console.log(this.song);
+      },
+      togglePauseSong(){
+        this.paused = !this.paused;
+        // inteligencia pour faire pause
+      },
+      closeSong(){
+        this.media = 0;
+      }
+    },
+    created(){
+      EventBus.$on('playThis', song => {
+        this.song = song;
+        this.playSong();
+      })
+    }
   }
 </script>
 
@@ -62,7 +98,9 @@
   @import './../assets/scss/mixins.scss';
 
   .bottomBar {
+    z-index: 400;
     position: fixed;
+    height: 60px;
     bottom: 0px;
     left: 0px;
     right: 0px;
@@ -72,6 +110,16 @@
     box-sizing: border-box;
     background-color: #007D63;
     width: 100%;
+    transition: all .4s ease;
+
+    &.active {
+      transition: all .4s ease;
+      height: 100px;
+
+      @media screen and (min-width: (em(768))){
+        height: 380px;
+      }
+    }
 
     &__player {
       height: 60px;
@@ -108,15 +156,44 @@
       }
       &__action {
         margin-left: auto;
+        display: flex;
+        flex-direction: row;
 
         &--play {
+          width: 25px;
+          height: 25px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center; 
+          
           img {
             height: 25px;
             width: 25px;
           }
         }
+        &--pause {
+          width: 25px;
+          height: 25px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+
+          img {
+            width: 11px;
+            height: 25px;
+          }
+        }
         &--playlist {
+          width: 25px;
+          height: 25px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
           margin-left: 7px;
+          
           img {
             height: 25px;
             width: 22px;
@@ -156,6 +233,10 @@
           
 
           tr {
+
+            &:hover {
+              background-color: #0a896f;
+            }
 
             td {
               p {
