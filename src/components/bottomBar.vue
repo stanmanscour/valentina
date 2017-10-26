@@ -26,7 +26,8 @@
     <div class="bottomBar__playlist">
       <template v-if="playlist.length > 0">
         <h2 class="bottomBar__playlist--title">Titres à venir</h2>
-        <table class="bottomBar__playlist__table">
+        <div class="bottomBar__playlist--scroll">
+          <table class="bottomBar__playlist__table">
             <thead>
               <tr>
                 <th class="tableTitle">Titre</th>
@@ -37,22 +38,22 @@
                 <th class="tableAction">Action</th>
               </tr>
             </thead>
-
             <transition-group name="fade" tag="tbody"> <!-- tbody -->
               <tr v-for="(song, index) in playlist" :key="index">
-                <td class="tableTitle"><p>{{ song.title }}</p></td>
-                <td class="tableArtist"><p>{{ song.artist }}</p></td>
-                <!-- <td class="tableGenre"><p>{{ song.genre }}</p></td> -->
-                <td class="tableAddBy"><p>Me</p></td>
-                <td class="tableCount"><p>{{ song.counter }}</p></td>
-                <td class="tableAction"><a @click.prevent="removeFromPlaylist(index)" href="#"><img src="/src/assets/icons/delete.svg"></a></td>
-                </tr>
-              </transition-group>
+              <td class="tableTitle"><p>{{ song.title }}</p></td>
+              <td class="tableArtist"><p>{{ song.artist }}</p></td>
+              <!-- <td class="tableGenre"><p>{{ song.genre }}</p></td> -->
+              <td class="tableAddBy"><p>Me</p></td>
+              <td class="tableCount"><p>{{ song.counter }}</p></td>
+              <td class="tableAction"><a @click.prevent="removeFromPlaylist(index)" href="#"><img src="/src/assets/icons/delete.svg"></a></td>
+              </tr>
+            </transition-group>
           </table>
-        </template>
-        <template v-else>
-          <h2 class="bottomBar__playlist--title">Pas de titre à venir</h2>
-        </template>
+        </div>
+      </template>
+      <template v-else>
+        <h2 class="bottomBar__playlist--title">Pas de titre à venir</h2>
+      </template>
     </div>
 
 
@@ -258,12 +259,21 @@
     }
 
     &__playlist {
+
       &--title {
         @extend .val-font;
         color: white;
         font-size: 25px;
         line-height: 40px;
         margin-bottom: 10px;
+      }
+      &--scroll {
+        height: 80vh;
+        overflow-y: scroll;
+
+        @media screen and (min-width: em(768)){
+          height: 270px;
+        }
       }
       &__table {
         width: 100%;
