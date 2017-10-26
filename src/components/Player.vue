@@ -1,8 +1,10 @@
 <template>
-    <div v-if="media" class="player">
-        <a @click="closeSong" class="player--closeBtn"><img src="/src/assets/icons/closePlayer.svg"></a>
-        <iframe v-if="media === 'youtube'" class="player__youtube" id="ytplayer" type="text/html" width="300" height="300" :src="'https://www.youtube.com/embed/'+song.src + '?rel=0&autoplay=1'" frameborder="0" />
-        <iframe v-if="media === 'soundcloud'" class="player__soundcloud" width="100%" height="450" scrolling="no" frameborder="no" :src="'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/'+song.src"></iframe>
+    <div>
+        <div v-if="media" class="player">
+            <a @click.prevent="closeSong" class="player--closeBtn"><img src="/src/assets/icons/closePlayer.svg"></a>
+            <iframe v-if="media === 'youtube'" class="player__youtube" id="ytplayer" type="text/html" width="300" height="300" :src="'https://www.youtube.com/embed/'+song.src + '?rel=0&autoplay=1'" frameborder="0" />
+            <iframe v-if="media === 'soundcloud'" class="player__soundcloud" width="100%" height="450" scrolling="no" frameborder="no" :src="'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/'+song.src"></iframe>
+        </div>
     </div>
 </template>
 

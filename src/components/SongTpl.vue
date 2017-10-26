@@ -12,7 +12,10 @@
                 <span class="song__info__more--time">2:45</span>
             </div>
         </div>
-        <a href="#" @click.prevent="play" class="song__action" >
+        <a href="#" @click.prevent="addPlaylist" class="song__actionTimeline">
+            <img src="/src/assets/icons/playlist.svg">
+        </a>
+        <a href="#" @click.prevent="play" class="song__actionPlay" >
             <img src="/src/assets/icons/play.svg">
         </a>
     </article>
@@ -31,6 +34,9 @@
         methods: {
             hoverSong(boolean) {
                 this.songHovered = boolean;
+            },
+            addPlaylist(){
+                EventBus.$emit('addToPlaylist', this.song);
             },
             play(){
                 EventBus.$emit('listenToThis', this.song);
@@ -119,7 +125,7 @@
                 }
             }
         }
-        &__action {
+        &__actionPlay {
             z-index: 30;
             position: absolute;
             right: 15px;
@@ -135,6 +141,20 @@
             img {
                 width: 100%;
             }
+        }
+        &__actionTimeline {
+            width: 23px;
+            height: 23px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            right: 21px;
+            bottom: 23px;
+            opacity: 0;
+            transition: all .4s ease;
+            //transition: opacity .3s ease;
         }
         &__shadow {
             position: absolute;
@@ -156,8 +176,12 @@
                 bottom: 30px;
                 text-shadow: 2px 2px 7px rgba(0, 0, 0, 0.48)
             }
-            .song__action {
+            .song__actionPlay {
                 bottom: 15px;
+                opacity: 1;
+            }
+            .song__actionTimeline {
+                bottom: 60px;
                 opacity: 1;
             }
             .song__info__more {

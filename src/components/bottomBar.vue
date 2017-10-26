@@ -2,53 +2,53 @@
   <div class="bottomBar" :class="{ active: playlistOpen }">
     
     <div class="bottomBar__player">
-      <img class="bottomBar__player--poster" src="#">
+      <img class="bottomBar__player--poster" :src="song.poster">
       <div class="bottomBar__player__names">
         <p>
-          <span class="bottomBar__player__names--title">Girl like you</span>
+          <span class="bottomBar__player__names--title">{{ song.title }}</span>
            - 
-          <span class="bottomBar__player__names--artist">Toro y moi</span>
+          <span class="bottomBar__player__names--artist">{{ song.artist }}</span>
         </p>
       </div>
       <div class="bottomBar__player__action">
-        <a @click="togglePauseSong" v-if="!paused" href="#" class="bottomBar__player__action--play"><img src="/src/assets/icons/play.svg"></a>
-        <a @click="togglePauseSong" v-if="paused" href="#" class="bottomBar__player__action--pause"><img src="/src/assets/icons/pause.svg"></a>
-        <a @click="togglePlaylist" href="#" class="bottomBar__player__action--playlist"><img src="/src/assets/icons/playlist.svg"></a>
+        <a @click.prevent="togglePauseSong" v-if="!paused" href="#" class="bottomBar__player__action--play"><img src="/src/assets/icons/play.svg"></a>
+        <a @click.prevent="togglePauseSong" v-if="paused" href="#" class="bottomBar__player__action--pause"><img src="/src/assets/icons/pause.svg"></a>
+        <a @click.prevent="togglePlaylist" href="#" class="bottomBar__player__action--playlist"><img src="/src/assets/icons/playlist.svg"></a>
       </div>
     </div>
     <div class="bottomBar__playlist">
-      <h2 class="bottomBar__playlist--title">Titres à venir</h2>
-      <table class="bottomBar__playlist__table">
-        <thead>
-          <tr>
-            <th>Titre</th>
-            <th>Artist</th>
-            <th>Genre</th>
-            <th>Add by</th>
-            <th>Count</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><p>Girl like you</p></td>
-            <td><p>Toro y moi</p></td>
-            <td><p>Electronic</p></td>
-            <td><p>Stan</p></td>
-            <td><p>233</p></td>
-            <td><p>X</p></td>
-          </tr>
-          <tr>
-            <td><p>Sauvagerie #1</p></td>
-            <td><p>Kalash Criminel</p></td>
-            <td><p>Rap</p></td>
-            <td><p>Stan</p></td>
-            <td><p>23</p></td>
-            <td><p>X</p></td>
-          </tr>
-        </tbody>
-      </table>
+      <template v-if="playlist.length > 0">
+        <h2 class="bottomBar__playlist--title">Titres à venir</h2>
+        <table class="bottomBar__playlist__table">
+            <thead>
+              <tr>
+                <th class="tableTitle">Titre</th>
+                <th class="tableArtist">Artist</th>
+                <!-- <th class="tableGenre">Genre</th> -->
+                <th class="tableAddBy">Add by</th>
+                <th class="tableCount">Count</th>
+                <th class="tableAction">Action</th>
+              </tr>
+            </thead>
+
+            <transition-group name="fade" tag="tbody"> <!-- tbody -->
+              <tr v-for="(song, index) in playlist" :key="index">
+                <td class="tableTitle"><p>{{ song.title }}</p></td>
+                <td class="tableArtist"><p>{{ song.artist }}</p></td>
+                <!-- <td class="tableGenre"><p>{{ song.genre }}</p></td> -->
+                <td class="tableAddBy"><p>Me</p></td>
+                <td class="tableCount"><p>{{ song.counter }}</p></td>
+                <td class="tableAction"><a @click.prevent="removeFromPlaylist(index)" href="#"><img src="/src/assets/icons/delete.svg"></a></td>
+                </tr>
+              </transition-group>
+          </table>
+        </template>
+        <template v-else>
+          <h2 class="bottomBar__playlist--title">Pas de titre à venir</h2>
+        </template>
     </div>
+
+
     <div style="visibility: hidden;">
       <iframe v-if="media === 'youtube'" class="player__youtube" id="ytplayer" type="text/html" width="300" height="300" :src="'https://www.youtube.com/embed/'+song.src + '?rel=0&autoplay=1'" frameborder="0" />
       <iframe v-if="media === 'soundcloud'" class="player__soundcloud" width="100%" height="450" scrolling="no" frameborder="no" :src="'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/'+song.src"></iframe>
@@ -58,17 +58,25 @@
 
 <script>
   import { EventBus } from './../main';
+  var Playlist = [
+    {"artist":"Travis Scott","counter":0,"genre":"","media":"youtube","poster":"https://i.ytimg.com/vi/BuNBLjJzRoo/maxresdefault.jpg","src":"lw3Or6eqIpI","title":"90210"},
+    {"artist":"Paradis","counter":0,"genre":"","media":"youtube","poster":"https://i.ytimg.com/vi/kWhR0RMcdfw/maxresdefault.jpg","src":"kWhR0RMcdfw","title":"Garde le pour toi"},
+    {"artist":"Chilly Gonzales","counter":0,"genre":"","media":"youtube","poster":"https://i.ytimg.com/vi/s8De5eg1kic/maxresdefault.jpg","src":"s8De5eg1kic","title":"White Keys"},
+    {"artist":"Krisy","counter":0,"genre":"","media":"youtube","poster":"https://images.genius.com/6ce79c67ae044d0cf85da54e70cc1df2.960x960x1.jpg","src":"p28wGh8z2mA","title":"Aucune émotion"},
+    {"artist":"O'boy","counter":0,"genre":"","media":"youtube","poster":"https://i2.wp.com/www.isiyu.fr/wp-content/uploads/2017/07/Capture-d%E2%80%99e%CC%81cran-2017-07-17-a%CC%80-16.05.39.png?resize=820%2C410&ssl=1","src":"qTqjmjoJWAI","title":"Cobra"}
+  ]
 
   export default {
     data() {
       return {
         playlistOpen: false,
         media: true,
-        song: null,
-        playlist: [],
+        song: {},
+        //playlist: Playlist,
         paused: false
       }
     },
+    props: ['playlist'],
     methods: {
       togglePlaylist(){
         this.playlistOpen = !this.playlistOpen;
@@ -83,6 +91,9 @@
       },
       closeSong(){
         this.media = 0;
+      },
+      removeFromPlaylist(index){
+        this.playlist.splice(index, 1);
       }
     },
     created(){
@@ -112,12 +123,31 @@
     width: 100%;
     transition: all .4s ease;
 
+    &:before {
+      content: none;
+      opacity: 0;
+      transition: all 3s ease;
+    }
+
     &.active {
       transition: all .4s ease;
-      height: 100px;
+      height: 100%;
 
       @media screen and (min-width: (em(768))){
         height: 380px;
+      }
+
+      &:before {
+        content: '';
+        display: inline-block;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.56);
+        top: -100%;
+        left: 0px;
+        opacity: 1;
+       // transition: all .4s ease;
       }
     }
 
@@ -193,7 +223,7 @@
           justify-content: center;
           align-items: center;
           margin-left: 7px;
-          
+
           img {
             height: 25px;
             width: 22px;
@@ -231,7 +261,6 @@
         }
         tbody {
           
-
           tr {
 
             &:hover {
@@ -242,13 +271,34 @@
               p {
                 color: white;
                 @extend .val-font;
-                font-size: 15px;
+                font-size: 12px;
                 margin-top: 10px;
                 margin-bottom: 10px;
+
+                
+                @media screen and (min-width: em(768)){
+                  font-size: 15px;
+                }
               }
             }
           }
         }
+        .tableTitle { }
+        .tableArtist { }
+        .tableGenre { }
+        .tableAddBy {
+          display: none;
+          @media screen and (min-width: em(768)){
+            display: table-cell;
+          }
+         }
+        .tableCount {
+          display: none;
+          @media screen and (min-width: em(768)){
+            display: table-cell;
+          }
+         }
+        .tableAction { }
       }
     }
   }

@@ -50,6 +50,7 @@
         margin-right: 10px;
         &__collection {
             box-sizing: border-box;
+            margin-bottom: 70px;
             &__item {
                 width: calc(50% - 20px);
                 height: 170px;

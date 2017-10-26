@@ -19,8 +19,8 @@
 	    </transition>
 
       <transition name="goUp">
-        <bottomBar v-if="listening"></bottomBar>
-      </transition
+        <bottomBar :playlist="playlist"></bottomBar> <!-- v-if="listening" -->
+      </transition>
 
 	    <transition name="goUp">
 	      <div v-if="errorVisible" class="val__info">
@@ -59,6 +59,7 @@
         fetchedSongs: [],
         songs: [],
         objSongInit: {},
+        playlist: [],
   
         newSong: {
           counter: 0,
@@ -154,6 +155,10 @@
       EventBus.$on('error', error => { // affiche l'erreur
         this.showError(error);
       })
+
+      EventBus.$on('addToPlaylist', song => { // ajoute cette musique à la liste de lecture
+        this.playlist.unshift(song); 
+      }) 
   
       EventBus.$on('closeAddForm', this.closeAddForm); // ferme le formulaire d'ajout de sons
   
@@ -193,9 +198,9 @@
     &--desc {
       line-height: 22px;
       font-size: 14px;
-      @extend .val-subFont;
+      @extend .val-font;
       margin-bottom: 0px;
-      color: white;
+      color: rgba(255, 255, 255, 0.5);
       text-align: center;
       font-weight: 300;
       max-width: 500px;
@@ -203,6 +208,7 @@
   }
   
   .val__info {
+    z-index: 1000;
     position: fixed;
     bottom: 0px;
     left: 0px;
