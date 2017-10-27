@@ -12,10 +12,18 @@
                 <span class="song__info__more--time">2:45</span>
             </div>
         </div>
-        <a href="#" @click.prevent="addPlaylist" class="song__actionTimeline">
-            <img src="/src/assets/icons/playlist.svg">
-        </a>
-        <a href="#" @click.prevent="play" class="song__actionPlay" >
+        <template v-if="isInPlaylist">
+           <a href="#" @click.prevent="removeFromPlaylist" class="song__actionTimeline">
+                <img src="/src/assets/icons/playlistCheck.svg">
+            </a>
+        </template>
+        <template v-else>
+            
+             <a href="#" @click.prevent="addToPlaylist" class="song__actionTimeline">
+                <img src="/src/assets/icons/playlist.svg">
+            </a>
+        </template>
+        <a href="#" @click.prevent="playThisSong(song)" class="song__actionPlay" >
             <img src="/src/assets/icons/play.svg">
         </a>
     </article>
@@ -23,20 +31,30 @@
 
 <script>
     import { EventBus } from './../main';
+    import { mapActions } from 'vuex';
 
     export default {
         data: function() {
             return {
-                songHovered: false
+                songHovered: false,
+                isInPlaylist: false
             }
         },
-        props: ['song'],
+        props: ['song', 'index'],
         methods: {
+            ...mapActions([
+                'playThisSong'
+            ]),
             hoverSong(boolean) {
                 this.songHovered = boolean;
             },
-            addPlaylist(){
+            addToPlaylist(){
                 EventBus.$emit('addToPlaylist', this.song);
+                this.isInPlaylist = true;
+            },
+            removeFromPlaylist(){
+                EventBus.$emit('removeFromPlaylist', this.song);
+                this.isInPlaylist = false;
             },
             play(){
                 EventBus.$emit('listenToThis', this.song);

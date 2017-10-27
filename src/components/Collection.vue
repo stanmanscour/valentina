@@ -3,7 +3,7 @@
         <ul class="songCollection__collection" v-masonry transition-duration="0.3s" item-selector=".songCollection__collection__item">
             <li class="songCollection__collection__item" v-masonry-tile v-for="(song, index) in songCollection" :style="{ height: calculateHeight(song.counter) }">
                 <!--  -->
-                <val-song :song="song"></val-song>
+                <val-song :song="song" :index="index"></val-song>
             </li>
         </ul>
     </section>

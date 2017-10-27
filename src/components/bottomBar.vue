@@ -2,12 +2,12 @@
   <div class="bottomBar" :class="{ active: playlistOpen }">
     
     <div class="bottomBar__player">
-      <img class="bottomBar__player--poster" :src="song.poster">
+      <img class="bottomBar__player--poster" :src="getCurrentSong.poster">
       <div class="bottomBar__player__names">
         <p>
-          <span class="bottomBar__player__names--title">{{ song.title }}</span>
+          <span class="bottomBar__player__names--title">{{ getCurrentSong.title }}</span>
            - 
-          <span class="bottomBar__player__names--artist">{{ song.artist }}</span>
+          <span class="bottomBar__player__names--artist">{{ getCurrentSong.artist }}</span>
         </p>
       </div>
       <div class="bottomBar__player__action">
@@ -45,7 +45,7 @@
               <!-- <td class="tableGenre"><p>{{ song.genre }}</p></td> -->
               <td class="tableAddBy"><p>Me</p></td>
               <td class="tableCount"><p>{{ song.counter }}</p></td>
-              <td class="tableAction"><a @click.prevent="removeFromPlaylist(index)" href="#"><img src="/src/assets/icons/delete.svg"></a></td>
+              <td class="tableAction"><a @click.prevent="removeFromPlaylist(song)" href="#"><img src="/src/assets/icons/delete.svg"></a></td>
               </tr>
             </transition-group>
           </table>
@@ -58,14 +58,16 @@
 
 
     <div style="visibility: hidden;">
-      <iframe v-if="media === 'youtube'" class="player__youtube" id="ytplayer" type="text/html" width="300" height="300" :src="'https://www.youtube.com/embed/'+song.src + '?rel=0&autoplay=1'" frameborder="0" />
-      <iframe v-if="media === 'soundcloud'" class="player__soundcloud" width="100%" height="450" scrolling="no" frameborder="no" :src="'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/'+song.src"></iframe>
+      <iframe v-if="getCurrentSong.media === 'youtube'" class="player__youtube" id="ytplayer" type="text/html" width="300" height="300" :src="'https://www.youtube.com/embed/'+getCurrentSong.src + '?rel=0&autoplay=1'" frameborder="0" />
+      <iframe v-if="getCurrentSong.media === 'soundcloud'" class="player__soundcloud" width="100%" height="450" scrolling="no" frameborder="no" :src="'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/'+getCurrentSong.src"></iframe>
     </div>
   </div>
 </template>
 
 <script>
   import { EventBus } from './../main';
+  import { mapGetters } from 'vuex';
+
   var Playlist = [
     {"artist":"Travis Scott","counter":0,"genre":"","media":"youtube","poster":"https://i.ytimg.com/vi/BuNBLjJzRoo/maxresdefault.jpg","src":"lw3Or6eqIpI","title":"90210"},
     {"artist":"Paradis","counter":0,"genre":"","media":"youtube","poster":"https://i.ytimg.com/vi/kWhR0RMcdfw/maxresdefault.jpg","src":"kWhR0RMcdfw","title":"Garde le pour toi"},
@@ -78,20 +80,25 @@
     data() {
       return {
         playlistOpen: false,
-        media: true,
+        //media: true,
         song: {},
-        //playlist: Playlist,
+        playlist: Playlist,
         paused: false
       }
     },
-    props: ['playlist'],
+    computed: {
+      ...mapGetters([
+        'getCurrentSong'
+      ])
+    },
+    //props: ['playlist'],
     methods: {
       togglePlaylist(){
         this.playlistOpen = !this.playlistOpen;
       },
       playSong(){
-        this.media = this.song.media;
-        console.log(this.song);
+        //this.media = this.song.media;
+        //console.log(this.song);
       },
       togglePauseSong(){
         this.paused = !this.paused;
@@ -100,8 +107,9 @@
       closeSong(){
         this.media = 0;
       },
-      removeFromPlaylist(index){
-        this.playlist.splice(index, 1);
+      removeFromPlaylist(song){
+        //this.playlist.splice(index, 1);
+        EventBus.$emit('removeFromPlaylist', song);
       }
     },
     created(){
