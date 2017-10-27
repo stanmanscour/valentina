@@ -12,14 +12,15 @@
                 <span class="song__info__more--time">2:45</span>
             </div>
         </div>
-        <template v-if="isInPlaylist">
-           <a href="#" @click.prevent="removeFromPlaylist" class="song__actionTimeline">
+        <!--<template v-if="checkIntoPlaylist(song)">
+           <a href="#" @click.prevent="removeFromPlaylist(song)" class="song__actionTimeline">
                 <img src="/src/assets/icons/playlistCheck.svg">
+                {{ checkIntoPlaylist(song) }}
             </a>
         </template>
-        <template v-else>
-            
-             <a href="#" @click.prevent="addToPlaylist" class="song__actionTimeline">
+        -->
+        <template> <!-- v-else -->
+             <a href="#" @click.prevent="addToPlaylist(song)" class="song__actionTimeline">
                 <img src="/src/assets/icons/playlist.svg">
             </a>
         </template>
@@ -37,25 +38,31 @@
         data: function() {
             return {
                 songHovered: false,
-                isInPlaylist: false
+                //isInPlaylist: false
             }
         },
         props: ['song', 'index'],
+        computed: {
+            //isInPlaylist: checkIntoPlaylist
+        },
         methods: {
             ...mapActions([
-                'playThisSong'
+                'playThisSong',
+                'addToPlaylist',
+                'removeFromPlaylist',
+                'checkIntoPlaylist'
             ]),
             hoverSong(boolean) {
                 this.songHovered = boolean;
             },
-            addToPlaylist(){
-                EventBus.$emit('addToPlaylist', this.song);
-                this.isInPlaylist = true;
-            },
-            removeFromPlaylist(){
-                EventBus.$emit('removeFromPlaylist', this.song);
-                this.isInPlaylist = false;
-            },
+            // addToPlaylist(){
+            //     EventBus.$emit('addToPlaylist', this.song);
+            //     this.isInPlaylist = true;
+            // },
+            // removeFromPlaylist(){
+            //     EventBus.$emit('removeFromPlaylist', this.song);
+            //     this.isInPlaylist = false;
+            // },
             play(){
                 EventBus.$emit('listenToThis', this.song);
             }

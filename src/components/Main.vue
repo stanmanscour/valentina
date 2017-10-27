@@ -83,10 +83,10 @@
 
         this.songs = this.fetchedSongs;
       },
-      listenTo(song) {
-        EventBus.$emit('playThis', song);
-        this.listening = true;
-      },
+      // listenTo(song) {
+      //   EventBus.$emit('playThis', song);
+      //   this.listening = true;
+      // },
       removeFromPlaylist(song){ // retire de la playlist
         let artist = song.artist;
         let songTitle = song.title;
@@ -94,11 +94,7 @@
         //console.log(this.playlist);
         let index = this.playlist.findIndex(function (x) { return x.title == songTitle })
         this.playlist.splice(index, 1);
-        //let index = this.playlist.findIndex(i => i.title == songTitle);
-        //console.log(index);
-        //let songIndex = this.playlist.findIndex(song);
-        //this.playlist.splice(index, 1);
-        //console.log(songIndex);
+
       },
       showError(string) { // Affiche les erreurs reçus par l'Event Bus 
         this.errorMsg = string;
@@ -169,9 +165,9 @@
         this.showError(error);
       })
 
-      EventBus.$on('addToPlaylist', song => { // ajoute cette musique à la liste de lecture
-        this.playlist.unshift(song); 
-      }) 
+      // EventBus.$on('addToPlaylist', song => { // ajoute cette musique à la liste de lecture
+      //   this.playlist.unshift(song); 
+      // }) 
 
       EventBus.$on('removeFromPlaylist', song => { // enlève de la playlist
         this.removeFromPlaylist(song);

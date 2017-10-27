@@ -14,9 +14,9 @@
         <a @click.prevent="togglePauseSong" v-if="!paused" href="#" class="bottomBar__player__action--play"><img src="/src/assets/icons/play.svg"></a>
         <a @click.prevent="togglePauseSong" v-if="paused" href="#" class="bottomBar__player__action--pause"><img src="/src/assets/icons/pause.svg"></a>
         <a @click.prevent="togglePlaylist" href="#" class="bottomBar__player__action__playlist">
-          <template v-if="playlist.length > 0">
+          <template v-if="getPlaylist.length > 0">
             <transition name="fade">
-            <span class="bottomBar__player__action__playlist--notif">{{ playlist.length }}</span>
+            <span class="bottomBar__player__action__playlist--notif">{{ getPlaylist.length }}</span>
             </transition>
           </template>
           <img src="/src/assets/icons/playlist.svg">
@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="bottomBar__playlist">
-      <template v-if="playlist.length > 0">
+      <template v-if="getPlaylist.length > 0">
         <h2 class="bottomBar__playlist--title">Titres à venir</h2>
         <div class="bottomBar__playlist--scroll">
           <table class="bottomBar__playlist__table">
@@ -39,7 +39,7 @@
               </tr>
             </thead>
             <transition-group name="fade" tag="tbody"> <!-- tbody -->
-              <tr v-for="(song, index) in playlist" :key="index">
+              <tr v-for="(song, index) in getPlaylist" :key="index">
               <td class="tableTitle"><p>{{ song.title }}</p></td>
               <td class="tableArtist"><p>{{ song.artist }}</p></td>
               <!-- <td class="tableGenre"><p>{{ song.genre }}</p></td> -->
@@ -67,38 +67,28 @@
 <script>
   import { EventBus } from './../main';
   import { mapGetters } from 'vuex';
-
-  var Playlist = [
-    {"artist":"Travis Scott","counter":0,"genre":"","media":"youtube","poster":"https://i.ytimg.com/vi/BuNBLjJzRoo/maxresdefault.jpg","src":"lw3Or6eqIpI","title":"90210"},
-    {"artist":"Paradis","counter":0,"genre":"","media":"youtube","poster":"https://i.ytimg.com/vi/kWhR0RMcdfw/maxresdefault.jpg","src":"kWhR0RMcdfw","title":"Garde le pour toi"},
-    {"artist":"Chilly Gonzales","counter":0,"genre":"","media":"youtube","poster":"https://i.ytimg.com/vi/s8De5eg1kic/maxresdefault.jpg","src":"s8De5eg1kic","title":"White Keys"},
-    {"artist":"Krisy","counter":0,"genre":"","media":"youtube","poster":"https://images.genius.com/6ce79c67ae044d0cf85da54e70cc1df2.960x960x1.jpg","src":"p28wGh8z2mA","title":"Aucune émotion"},
-    {"artist":"O'boy","counter":0,"genre":"","media":"youtube","poster":"https://i2.wp.com/www.isiyu.fr/wp-content/uploads/2017/07/Capture-d%E2%80%99e%CC%81cran-2017-07-17-a%CC%80-16.05.39.png?resize=820%2C410&ssl=1","src":"qTqjmjoJWAI","title":"Cobra"}
-  ]
+  import { mapActions } from 'vuex';
 
   export default {
     data() {
       return {
         playlistOpen: false,
-        //media: true,
         song: {},
-        playlist: Playlist,
         paused: false
       }
     },
     computed: {
       ...mapGetters([
-        'getCurrentSong'
+        'getCurrentSong',
+        'getPlaylist'
       ])
     },
-    //props: ['playlist'],
     methods: {
+      ...mapActions([
+        'removeFromPlaylist'
+      ]),
       togglePlaylist(){
         this.playlistOpen = !this.playlistOpen;
-      },
-      playSong(){
-        //this.media = this.song.media;
-        //console.log(this.song);
       },
       togglePauseSong(){
         this.paused = !this.paused;
@@ -107,16 +97,6 @@
       closeSong(){
         this.media = 0;
       },
-      removeFromPlaylist(song){
-        //this.playlist.splice(index, 1);
-        EventBus.$emit('removeFromPlaylist', song);
-      }
-    },
-    created(){
-      EventBus.$on('playThis', song => {
-        this.song = song;
-        this.playSong();
-      })
     }
   }
 </script>
