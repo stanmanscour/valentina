@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import playlist from './modules/playlist';
+import msgError from './modules/msgError';
 
 Vue.use(Vuex);
 
@@ -34,6 +35,7 @@ export const store = new Vuex.Store({
         }
     },
     modules: {
-        playlist
+        playlist,
+        msgError
     }
 })

@@ -1,37 +1,21 @@
 <template>
 	<div>
 		<val-header></val-header>
-		<transition name="fade">
+		  <transition name="fade">
       		<val-formAdd :objSongInit="objSongInit" v-if="addFormVisible"></val-formAdd>
     	</transition>
     
-
 	    <div class="val__intro">
 	      <h1 class="val__intro--title">valentina.io</h1>
 	      <p class="val__intro--desc">Lorem ipsum dolor sit amet, consectetur adipiscing</p>
 	    </div>
 	    
 	    <val-collection :songCollection="songs"></val-collection>
-	    <!-- from db -->
-	    
-	    <transition name="fade">
-	      <!-- <val-player :song="song" v-if="listening"></val-player> -->
-	    </transition>
-
       
-      <bottomBar :playlist="playlist"></bottomBar> <!-- v-if="listening" -->
+      <val-bottom-bar></val-bottom-bar> <!-- v-if="listening" -->
       <val-menu-mobile></val-menu-mobile>
+      <val-msg-error></val-msg-error>
       
-
-	    <transition name="goUp">
-	      <div v-if="errorVisible" class="val__info">
-	        <p class="val__info--errorMsg">{{ errorMsg }}</p>
-	        <a class="val__info--close" href="#" @click.prevent="closeError">
-	          <img src="src/assets/icons/closeWhite.svg">
-	        </a>
-	      </div>
-	    </transition>
-  
 	</div>
 </template>
 
@@ -39,6 +23,9 @@
   import {
     EventBus
   } from './../main';
+
+  import { mapGetters } from 'vuex';
+  import { mapActions } from 'vuex';
   
   // templates
   import Vue from 'vue';
@@ -49,7 +36,8 @@
   import FormAdd from './FormAdd.vue';
   import Header from './Header.vue';
   import MenuMobile from './MenuMobile.vue';
-  
+  import MsgError from './MsgError.vue';
+
   export default {
     data() {
       return {
@@ -72,6 +60,9 @@
       }
     },
     methods: {
+      ...mapActions({
+        showError: 'showError'
+      }),
       getSongsFromDb() { // fetch songs from the db
         this.fetchedSongs = [];
         this.$http.get('https://valentina-7c291.firebaseio.com/songs.json').then(response => {
@@ -84,19 +75,6 @@
         });
 
         this.songs = this.fetchedSongs;
-      },
-
-      showError(string) { // Affiche les erreurs reçus par l'Event Bus 
-        this.errorMsg = string;
-        this.errorVisible = true;
-  
-        var self = this;
-        setTimeout(function() {
-          self.errorVisible = false;
-        }, 5000);
-      },
-      closeError() { // Ferme l'erreur
-        this.errorVisible = false;
       },
       showAddForm(obj) { // Fais apparaître le formulaire d'ajout de sons
         this.addFormVisible = true;
@@ -136,12 +114,15 @@
       valPlayer: Player,
       valFormAdd: FormAdd,
       valHeader: Header,
-      bottomBar: bottomBar,
-      valMenuMobile: MenuMobile
+      valBottomBar: bottomBar,
+      valMenuMobile: MenuMobile,
+      valMsgError: MsgError
     },
 
     created() {
-  
+      
+
+
       this.getSongsFromDb(); // get from firebase
   
       EventBus.$on('addFromHeader', newSong => { // ouvre le formulaire depuis le header
@@ -170,11 +151,15 @@
   @import './../assets/scss/mixins.scss';
 
   .val__intro {
-    margin-top: em(100);
-    width: 100%;
+    margin-top: em(40);
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    @media screen and (min-width: em(768)){
+      margin-top: em(100);
+    }
+
     &--title {
       font-size: em(45);
       @extend .val-font;
@@ -196,42 +181,6 @@
       text-align: center;
       font-weight: 300;
       max-width: 500px;
-    }
-  }
-  
-  .val__info {
-    z-index: 1000;
-    position: fixed;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    background-color: #FD5B5B;
-    padding-left: 30px;
-    padding-right: 30px;
-    &--errorMsg {
-      @extend .val-font;
-      text-align: center;
-      color: white;
-      font-size: 13px;
-      line-height: 18px;
-      padding-top: 15px;
-      padding-bottom: 15px;
-    }
-    &--close {
-      margin-left: 10px;
-      width: 18px;
-      height: 13px;
-      &:hover {
-        opacity: 0.7;
-      }
-      img {
-        width: 100%;
-        height: 100%;
-      }
     }
   }
 </style>

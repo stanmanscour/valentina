@@ -115,6 +115,7 @@
     z-index: 20;
     padding-left: 3%;
     padding-right: 3%;
+
     @media screen and (min-width: em(1024)) {
       max-width: 1024px;
       padding: 0;
@@ -239,6 +240,13 @@
           background-image: url("/src/assets/icons/research.svg");
         }
       }
+    }
+  }
+
+  .header {
+    display: none;
+    @media screen and (min-width: em(768)){
+      display: flex;
     }
   }
 </style>
