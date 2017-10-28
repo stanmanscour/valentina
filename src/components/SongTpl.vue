@@ -59,7 +59,6 @@
                 'playThisSong',
                 'addToPlaylist',
                 'removeFromPlaylist',
-                //'checkIntoPlaylist'
             ]),
             hoverSong(boolean) {
                 this.songHovered = boolean;

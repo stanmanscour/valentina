@@ -2,21 +2,21 @@
   <div class="bottomBar" :class="{ active: playlistOpen }">
     
     <div class="bottomBar__player">
-      <img class="bottomBar__player--poster" :src="getCurrentSong.poster">
+      <img class="bottomBar__player--poster" :src="currentSong.poster">
       <div class="bottomBar__player__names">
         <p>
-          <span class="bottomBar__player__names--title">{{ getCurrentSong.title }}</span>
+          <span class="bottomBar__player__names--title">{{ currentSong.title }}</span>
            - 
-          <span class="bottomBar__player__names--artist">{{ getCurrentSong.artist }}</span>
+          <span class="bottomBar__player__names--artist">{{ currentSong.artist }}</span>
         </p>
       </div>
       <div class="bottomBar__player__action">
         <a @click.prevent="togglePauseSong" v-if="!paused" href="#" class="bottomBar__player__action--play"><img src="/src/assets/icons/play.svg"></a>
         <a @click.prevent="togglePauseSong" v-if="paused" href="#" class="bottomBar__player__action--pause"><img src="/src/assets/icons/pause.svg"></a>
         <a @click.prevent="togglePlaylist" href="#" class="bottomBar__player__action__playlist">
-          <template v-if="getPlaylist.length > 0">
+          <template v-if="playlist.length > 0">
             <transition name="fade">
-            <span class="bottomBar__player__action__playlist--notif">{{ getPlaylist.length }}</span>
+            <span class="bottomBar__player__action__playlist--notif">{{ playlist.length }}</span>
             </transition>
           </template>
           <img src="/src/assets/icons/playlist.svg">
@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="bottomBar__playlist">
-      <template v-if="getPlaylist.length > 0">
+      <template v-if="playlist.length > 0">
         <h2 class="bottomBar__playlist--title">Titres à venir</h2>
         <div class="bottomBar__playlist--scroll">
           <table class="bottomBar__playlist__table">
@@ -39,7 +39,7 @@
               </tr>
             </thead>
             <transition-group name="fade" tag="tbody"> <!-- tbody -->
-              <tr v-for="(song, index) in getPlaylist" :key="index">
+              <tr v-for="(song, index) in playlist" :key="index">
               <td class="tableTitle"><p>{{ song.title }}</p></td>
               <td class="tableArtist"><p>{{ song.artist }}</p></td>
               <!-- <td class="tableGenre"><p>{{ song.genre }}</p></td> -->
@@ -58,8 +58,8 @@
 
 
     <div style="visibility: hidden;">
-      <iframe v-if="getCurrentSong.media === 'youtube'" class="player__youtube" id="ytplayer" type="text/html" width="300" height="300" :src="'https://www.youtube.com/embed/'+getCurrentSong.src + '?rel=0&autoplay=1'" frameborder="0" />
-      <iframe v-if="getCurrentSong.media === 'soundcloud'" class="player__soundcloud" width="100%" height="450" scrolling="no" frameborder="no" :src="'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/'+getCurrentSong.src"></iframe>
+      <iframe v-if="currentSong.media === 'youtube'" class="player__youtube" id="ytplayer" type="text/html" width="300" height="300" :src="'https://www.youtube.com/embed/'+currentSong.src + '?rel=0&autoplay=1'" frameborder="0" />
+      <iframe v-if="currentSong.media === 'soundcloud'" class="player__soundcloud" width="100%" height="450" scrolling="no" frameborder="no" :src="'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/'+currentSong.src"></iframe>
     </div>
   </div>
 </template>
@@ -73,15 +73,14 @@
     data() {
       return {
         playlistOpen: false,
-        song: {},
         paused: false
       }
     },
     computed: {
-      ...mapGetters([
-        'getCurrentSong',
-        'getPlaylist'
-      ])
+      ...mapGetters({
+        currentSong: 'getCurrentSong',
+        playlist: 'getPlaylist'
+      })
     },
     methods: {
       ...mapActions([
@@ -94,9 +93,6 @@
         this.paused = !this.paused;
         // inteligencia pour faire pause
       },
-      // closeSong(){
-      //   this.media = 0;
-      // },
     }
   }
 </script>
