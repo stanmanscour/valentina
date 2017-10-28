@@ -13,12 +13,12 @@
             </div>
         </div>
         <template v-if="checkIntoPlaylist">
-            <a href="#" @click.prevent="removeFromPlaylist(song)" class="song__actionTimeline">
+            <a href="#" @click.prevent="removeFromPlaylist(song)" class="song__actionPlaylist">
                 <img src="/src/assets/icons/playlistCheck.svg"> 
             </a>
         </template>
         <template v-else> 
-             <a href="#" @click.prevent="addToPlaylist(song)" class="song__actionTimeline">
+             <a href="#" @click.prevent="addToPlaylist(song)" class="song__actionPlaylist">
                 <img src="/src/assets/icons/playlist.svg">
             </a>
         </template>
@@ -165,7 +165,7 @@
                 width: 100%;
             }
         }
-        &__actionTimeline {
+        &__actionPlaylist {
             width: 23px;
             height: 23px;
             display: flex;
@@ -203,7 +203,7 @@
                 bottom: 15px;
                 opacity: 1;
             }
-            .song__actionTimeline {
+            .song__actionPlaylist {
                 bottom: 60px;
                 opacity: 1;
             }
