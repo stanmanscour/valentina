@@ -77,7 +77,7 @@
     z-index: 400;
     position: fixed;
     height: 60px;
-    bottom: 0px;
+    bottom: 60px;
     left: 0px;
     right: 0px;
     padding-bottom: 15px;
@@ -94,9 +94,13 @@
       transition: all 3s ease;
     }
 
+    @media screen and (min-width: em(768)){
+      bottom: 0px;
+    }
+
     &.active {
       transition: all .4s ease;
-      height: 100%;
+      height: 90%;
 
       @media screen and (min-width: (em(768))){
         height: 380px;

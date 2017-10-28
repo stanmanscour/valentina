@@ -18,9 +18,10 @@
 	      <!-- <val-player :song="song" v-if="listening"></val-player> -->
 	    </transition>
 
-      <transition name="goUp">
-        <bottomBar :playlist="playlist"></bottomBar> <!-- v-if="listening" -->
-      </transition>
+      
+      <bottomBar :playlist="playlist"></bottomBar> <!-- v-if="listening" -->
+      <val-menu-mobile></val-menu-mobile>
+      
 
 	    <transition name="goUp">
 	      <div v-if="errorVisible" class="val__info">
@@ -47,6 +48,7 @@
   import bottomBar from './BottomBar.vue';
   import FormAdd from './FormAdd.vue';
   import Header from './Header.vue';
+  import MenuMobile from './MenuMobile.vue';
   
   export default {
     data() {
@@ -134,7 +136,8 @@
       valPlayer: Player,
       valFormAdd: FormAdd,
       valHeader: Header,
-      bottomBar: bottomBar
+      bottomBar: bottomBar,
+      valMenuMobile: MenuMobile
     },
 
     created() {
