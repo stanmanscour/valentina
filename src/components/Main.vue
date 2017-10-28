@@ -44,7 +44,7 @@
   import Video from './Video.vue';
   import Collection from './Collection.vue';
   import Player from './Player.vue';
-  import bottomBar from './bottomBar.vue';
+  import bottomBar from './BottomBar.vue';
   import FormAdd from './FormAdd.vue';
   import Header from './Header.vue';
   
@@ -83,19 +83,7 @@
 
         this.songs = this.fetchedSongs;
       },
-      // listenTo(song) {
-      //   EventBus.$emit('playThis', song);
-      //   this.listening = true;
-      // },
-      removeFromPlaylist(song){ // retire de la playlist
-        let artist = song.artist;
-        let songTitle = song.title;
 
-        //console.log(this.playlist);
-        let index = this.playlist.findIndex(function (x) { return x.title == songTitle })
-        this.playlist.splice(index, 1);
-
-      },
       showError(string) { // Affiche les erreurs reçus par l'Event Bus 
         this.errorMsg = string;
         this.errorVisible = true;
@@ -153,10 +141,6 @@
   
       this.getSongsFromDb(); // get from firebase
   
-      EventBus.$on('listenToThis', song => { // démarre le son
-        this.listenTo(song);
-      })
-  
       EventBus.$on('addFromHeader', newSong => { // ouvre le formulaire depuis le header
         this.showAddForm(newSong);
       })
@@ -165,14 +149,6 @@
         this.showError(error);
       })
 
-      // EventBus.$on('addToPlaylist', song => { // ajoute cette musique à la liste de lecture
-      //   this.playlist.unshift(song); 
-      // }) 
-
-      EventBus.$on('removeFromPlaylist', song => { // enlève de la playlist
-        this.removeFromPlaylist(song);
-      })
-  
       EventBus.$on('closeAddForm', this.closeAddForm); // ferme le formulaire d'ajout de sons
   
       EventBus.$on('uploadNewSong', obj => {
