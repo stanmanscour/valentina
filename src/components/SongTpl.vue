@@ -25,6 +25,9 @@
         <a href="#" @click.prevent="playThisSong(song)" class="song__actionPlay" >
             <img src="/src/assets/icons/play.svg">
         </a>
+        <a href="#" class="song__actionConfig">
+            <img src="/src/assets/icons/config.svg">
+        </a>
     </article>
 </template>
 
@@ -178,6 +181,25 @@
             transition: all .4s ease;
             //transition: opacity .3s ease;
         }
+        &__actionConfig {
+            z-index: 30;
+            position: absolute;
+            right: 12px;
+            top: -40px;
+            height: 38px;
+            width: 38px;
+            opacity: 0;
+            transition: all .3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            img {
+                width: 15px;
+                height: 15px;
+            }
+        }
         &__shadow {
             position: absolute;
             filter: blur(1px);
@@ -204,6 +226,10 @@
             }
             .song__actionPlaylist {
                 bottom: 60px;
+                opacity: 1;
+            }
+            .song__actionConfig {
+                top: 12px;
                 opacity: 1;
             }
             .song__info__more {

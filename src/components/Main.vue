@@ -12,7 +12,7 @@
 	    
 	    <val-collection :songCollection="songs"></val-collection>
       
-      <val-bottom-bar></val-bottom-bar> <!-- v-if="listening" -->
+      <val-bottom-bar></val-bottom-bar>
       <val-menu-mobile></val-menu-mobile>
       <val-msg-error></val-msg-error>
       
@@ -41,15 +41,11 @@
   export default {
     data() {
       return {
-        listening: false,
         addFormVisible: false,
         song: null,
-        errorVisible: false,
-        errorMsg: '',
         fetchedSongs: [],
         songs: [],
         objSongInit: {},
-        playlist: [],
   
         newSong: {
           counter: 0,
@@ -76,6 +72,15 @@
 
         this.songs = this.fetchedSongs;
       },
+      uploadOnDb(obj) {
+        this.$http.post('https://valentina-7c291.firebaseio.com/songs.json', obj)
+          .then(() => {
+            this.getSongsFromDb();
+          }, error => {
+            this.showError('Pas de connexion');
+          })
+      },
+
       showAddForm(obj) { // Fais apparaître le formulaire d'ajout de sons
         this.addFormVisible = true;
         this.objSongInit = obj;
@@ -84,14 +89,7 @@
         this.addFormVisible = false;
         this.songSrc = '';
       },
-      uploadOnDb(obj) {
-        this.$http.post('https://valentina-7c291.firebaseio.com/songs.json', obj)
-          .then(() => {
-            this.getSongsFromDb();
-          }, error => {
-            console.log(error);
-          })
-      },
+      
       research(string) { // recherche dans la collection de musique
 
         var newArr = this.fetchedSongs.filter( item => {
@@ -129,10 +127,6 @@
         this.showAddForm(newSong);
       })
   
-      EventBus.$on('error', error => { // affiche l'erreur
-        this.showError(error);
-      })
-
       EventBus.$on('closeAddForm', this.closeAddForm); // ferme le formulaire d'ajout de sons
   
       EventBus.$on('uploadNewSong', obj => {
