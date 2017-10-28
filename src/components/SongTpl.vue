@@ -12,14 +12,12 @@
                 <span class="song__info__more--time">2:45</span>
             </div>
         </div>
-        <!--<template v-if="checkIntoPlaylist(song)">
-           <a href="#" @click.prevent="removeFromPlaylist(song)" class="song__actionTimeline">
-                <img src="/src/assets/icons/playlistCheck.svg">
-                {{ checkIntoPlaylist(song) }}
+        <template v-if="checkIntoPlaylist">
+            <a href="#" @click.prevent="removeFromPlaylist(song)" class="song__actionTimeline">
+                <img src="/src/assets/icons/playlistCheck.svg"> 
             </a>
         </template>
-        -->
-        <template> <!-- v-else -->
+        <template v-else> 
              <a href="#" @click.prevent="addToPlaylist(song)" class="song__actionTimeline">
                 <img src="/src/assets/icons/playlist.svg">
             </a>
@@ -32,39 +30,39 @@
 
 <script>
     import { EventBus } from './../main';
+    import { mapGetters } from 'vuex';
     import { mapActions } from 'vuex';
 
     export default {
         data: function() {
             return {
                 songHovered: false,
-                //isInPlaylist: false
+                test: this.getPlaylist
             }
         },
-        props: ['song', 'index'],
+        props: ['song'],
         computed: {
-            //isInPlaylist: checkIntoPlaylist
+            ...mapGetters({
+                playlist: 'getPlaylist'
+            }),
+            checkIntoPlaylist(){
+                let isIn = this.playlist.indexOf(this.song);
+                if (isIn === -1 ){
+                    return false;
+                } else {
+                    return true;
+                }
+            }
         },
         methods: {
             ...mapActions([
                 'playThisSong',
                 'addToPlaylist',
                 'removeFromPlaylist',
-                'checkIntoPlaylist'
+                //'checkIntoPlaylist'
             ]),
             hoverSong(boolean) {
                 this.songHovered = boolean;
-            },
-            // addToPlaylist(){
-            //     EventBus.$emit('addToPlaylist', this.song);
-            //     this.isInPlaylist = true;
-            // },
-            // removeFromPlaylist(){
-            //     EventBus.$emit('removeFromPlaylist', this.song);
-            //     this.isInPlaylist = false;
-            // },
-            play(){
-                EventBus.$emit('listenToThis', this.song);
             }
         }
     }

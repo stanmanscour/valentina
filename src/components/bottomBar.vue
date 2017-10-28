@@ -94,9 +94,9 @@
         this.paused = !this.paused;
         // inteligencia pour faire pause
       },
-      closeSong(){
-        this.media = 0;
-      },
+      // closeSong(){
+      //   this.media = 0;
+      // },
     }
   }
 </script>
