@@ -11,7 +11,7 @@
 
         <template>
           <a class="topHeader__middle--addLink" href="#">Ajouter <img src="src/assets/icons/white-add.svg"></a>
-          <a class="topHeader__middle--searchLink" href="#">Rechercher <img src="src/assets/icons/white-research.svg"></a>
+          <a @click.prevent="toggleSearch" class="topHeader__middle--searchLink" href="#">Rechercher <img src="src/assets/icons/white-research.svg"></a>
         </template>
         
         <!-- -->
@@ -21,8 +21,9 @@
         <a class="topHeader__right--configLink" href="#"><img src="src/assets/icons/white-research.svg"></a>
       </div>
     </div>
+    
     <div class="addonHeader">
-      <div class="addonHeader__search" v-if="">
+      <div class="addonHeader__search" v-if="searchVisible">
         <input class="addonHeader__search--input" type="text" placeholder="Rechercher dans la bibliothèque">
       </div>
     </div>
@@ -34,6 +35,19 @@
   import { mapActions } from 'vuex';
 
   export default {
+    computed: {
+      ...mapGetters({
+        searchVisible: 'getSearchVisible',
+      })
+    },
+    methods: {
+      ...mapActions([
+        'toggleSearch'
+      ])
+    },
+    mounted(){
+      console.log(this.searchVisible);
+    }
   }
 </script>
 
@@ -47,6 +61,7 @@
     width: 100%;
     box-shadow: 1px 5px 20px 0px rgba(1, 107, 85, 0.16);
     background-color: #00a884;
+        z-index: 350;
   }
 
   .topHeader {
@@ -56,10 +71,7 @@
     width: 100%;
     display: flex;
     flex-direction: row;
-    
     box-sizing: border-box;
-    
-    z-index: 350; // not real
     justify-content: space-between;
 
     &__left {
