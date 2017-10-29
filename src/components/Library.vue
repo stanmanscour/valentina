@@ -1,6 +1,5 @@
 <template>
   <div>
-
 	  <div class="val__intro">
 	    <h1 class="val__intro--title">valentina.io</h1>
 	    <p class="val__intro--desc">Lorem ipsum dolor sit amet, consectetur adipiscing</p>

@@ -76,6 +76,16 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        
+        &.router-link-active:after {
+          content: '';
+          height: 3px;
+          width: 14%;
+          background-color: white;
+          display: inline-block;
+          position: absolute;
+          bottom: 0px;
+        }
 
         &--icon {
           width: 20px;
