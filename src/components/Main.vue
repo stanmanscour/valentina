@@ -2,14 +2,17 @@
 	<main>
 
     <!-- header general app -->
+    <top-header></top-header>
 
+    <!--
     <template>
       <val-header></val-header>
       <transition name="fade">
         <val-formAdd :objSongInit="objSongInit" v-if="addFormVisible"></val-formAdd>
       </transition>
     </template>
-    
+    -->
+
     <!-- router view -->
     <keep-alive>
       <router-view></router-view>
@@ -44,6 +47,7 @@
   import Header from './Header.vue';
   import MenuMobile from './MenuMobile.vue';
   import MsgError from './MsgError.vue';
+  import TopHeader from './TopHeader.vue';
 
   export default {
     data() {
@@ -108,7 +112,8 @@
       valHeader: Header,
       valBottomBar: bottomBar,
       valMenuMobile: MenuMobile,
-      valMsgError: MsgError
+      valMsgError: MsgError,
+      topHeader: TopHeader
     },
 
     created() {

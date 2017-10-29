@@ -1,7 +1,7 @@
 <template>
   <div>
 	  <div class="val__intro">
-	    <h1 class="val__intro--title">valentina.io</h1>
+	    <h1 class="val__intro--title">Ma bibliothèque</h1>
 	    <p class="val__intro--desc">Lorem ipsum dolor sit amet, consectetur adipiscing</p>
 	  </div>
 	  <val-collection :songCollection="songs"></val-collection>
@@ -46,7 +46,7 @@
   @import './../assets/scss/mixins.scss';
 
   .val__intro {
-    margin-top: em(40);
+    margin-top: em(80);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -56,14 +56,14 @@
     }
 
     &--title {
-      font-size: em(45);
+      font-size: em(35);
       @extend .val-font;
       color: white;
       font-weight: 500;
       text-align: center;
       line-height: 55px;
       @media screen and (min-width: em(1024)) {
-        font-size: 80px;
+        font-size: 70px;
         line-height: 80px;
       }
     }
