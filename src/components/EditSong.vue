@@ -89,7 +89,7 @@
     @media screen and (min-width: em(768)){
       width: 40%;
     }
-
+    
     @media screen and (min-width: em(1024)){
       width: 30%;
     }

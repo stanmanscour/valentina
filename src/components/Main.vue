@@ -1,27 +1,25 @@
 <template>
 	<main>
 
-    <template> <!-- collection
-      
-      <!-- header -->
+    <template> <!-- header -->
       <val-header></val-header>
       <transition name="fade">
         <val-formAdd :objSongInit="objSongInit" v-if="addFormVisible"></val-formAdd>
       </transition>
-      <!-- header -->
+    </template> <!-- header -->
     
+    <template>
 	    <div class="val__intro">
 	      <h1 class="val__intro--title">valentina.io</h1>
 	      <p class="val__intro--desc">Lorem ipsum dolor sit amet, consectetur adipiscing</p>
 	    </div>
-      
 	    <val-collection :songCollection="songs"></val-collection>
       <val-bottom-bar></val-bottom-bar>
-
-    </template> <!-- collection -->
+    </template>
       
     <template> <!-- general app -->
-      
+      <val-menu-mobile></val-menu-mobile>
+      <val-msg-error></val-msg-error>
     </template> <!-- general app -->
       
 	</main>
@@ -43,7 +41,8 @@
   import bottomBar from './BottomBar.vue';
   import FormAdd from './FormAdd.vue';
   import Header from './Header.vue';
-  
+  import MenuMobile from './MenuMobile.vue';
+  import MsgError from './MsgError.vue';
 
   export default {
     data() {
@@ -120,7 +119,8 @@
       valFormAdd: FormAdd,
       valHeader: Header,
       valBottomBar: bottomBar,
-      
+      valMenuMobile: MenuMobile,
+      valMsgError: MsgError
     },
 
     created() {
