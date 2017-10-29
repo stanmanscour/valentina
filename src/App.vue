@@ -2,7 +2,7 @@
   <div id="app" class="val">
     
     <router-view></router-view>
-  
+    
   </div>
 </template>
 

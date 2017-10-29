@@ -2,17 +2,17 @@
   <ul class="menuMobile">
 
     <li class="menuMobile__itemLink">
-      <a href="#" class="menuMobile__itemLink__link">
+      <router-link to="explorer" class="menuMobile__itemLink__link">
         <img class="menuMobile__itemLink__link--icon" src="src/assets/icons/explorer.svg" alt="">
         <span class="menuMobile__itemLink__link--title">explorer</span>
-      </a>
+      </router-link>
     </li>
 
     <li class="menuMobile__itemLink">
-      <a href="#" class="menuMobile__itemLink__link">
+      <router-link to="library" class="menuMobile__itemLink__link">
         <img class="menuMobile__itemLink__link--icon" src="src/assets/icons/white-add.svg" alt="">
         <span class="menuMobile__itemLink__link--title">bibliothèque</span>
-      </a>
+      </router-link>
     </li>
 
     
