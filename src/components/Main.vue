@@ -66,6 +66,11 @@
         }
       }
     },
+    computed: {
+      ...mapGetters({
+
+      }),
+    },
     methods: {
       ...mapActions({
         showError: 'showError'
