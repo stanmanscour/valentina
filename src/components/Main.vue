@@ -1,22 +1,28 @@
 <template>
-	<div>
-		<val-header></val-header>
-		  <transition name="fade">
-      		<val-formAdd :objSongInit="objSongInit" v-if="addFormVisible"></val-formAdd>
-    	</transition>
+	<main>
+
+    <template> <!-- header -->
+      <val-header></val-header>
+      <transition name="fade">
+        <val-formAdd :objSongInit="objSongInit" v-if="addFormVisible"></val-formAdd>
+      </transition>
+    </template> <!-- header -->
     
+    <template>
 	    <div class="val__intro">
 	      <h1 class="val__intro--title">valentina.io</h1>
 	      <p class="val__intro--desc">Lorem ipsum dolor sit amet, consectetur adipiscing</p>
 	    </div>
-	    
 	    <val-collection :songCollection="songs"></val-collection>
-      
       <val-bottom-bar></val-bottom-bar>
+    </template>
+      
+    <template> <!-- general app -->
       <val-menu-mobile></val-menu-mobile>
       <val-msg-error></val-msg-error>
+    </template> <!-- general app -->
       
-	</div>
+	</main>
 </template>
 
 <script>

@@ -1,11 +1,21 @@
 <template>
     <section class="songCollection">
-    <val-edit-song></val-edit-song>
+
+    <transition name="fade">
+        <val-edit-song></val-edit-song>
+    </transition>
+
+    <template v-if="songCollection.length > 1">
         <ul class="songCollection__collection" v-masonry transition-duration="0.3s" item-selector=".songCollection__collection__item">
             <li class="songCollection__collection__item" v-masonry-tile v-for="(song, index) in songCollection" :style="{ height: calculateHeight(song.counter) }">
                 <val-song :song="song" :index="index"></val-song>
             </li>
         </ul>
+    </template>
+    <template v-else>
+        Pas de musique
+    </template>
+        
         
     </section>
 </template>

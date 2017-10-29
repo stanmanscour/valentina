@@ -19,8 +19,9 @@ const mutations = {
     },
     hideTplEditSong: state => {
             state.tplEditSongVisible = false;
+            state.editSong = {};
         }
-        // fonctions de curl
+        // curl functions
 }
 
 const actions = {

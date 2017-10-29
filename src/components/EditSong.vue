@@ -24,7 +24,7 @@
           </div>
         </div>
         <div class="editSong__form__submit">
-          <a @click="hideTplEditSong" href="#">Annuler</a>
+          <a @click.prevent="hideTplEditSong" href="#">Annuler</a>
           <a href="#">Valider</a>
         </div>
       </div>
@@ -82,6 +82,18 @@
     box-sizing: border-box;
     width: 90%;
 
+    @media screen and (min-width: em(500)){
+      width: 75%;
+    }
+
+    @media screen and (min-width: em(768)){
+      width: 40%;
+    }
+
+    @media screen and (min-width: em(1024)){
+      width: 30%;
+    }
+
     &--title {
       @extend .val-font;
       text-align: center;
@@ -124,7 +136,7 @@
         &--input {
           @extend .val-font;
           font-size: 20px;
-          width: 140px;
+          width: 100%;
           margin-left: 10px;
           background-color: transparent;
           border: none;
