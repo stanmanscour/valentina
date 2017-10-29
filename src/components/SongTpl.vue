@@ -25,7 +25,7 @@
         <a href="#" @click.prevent="playThisSong(song)" class="song__actionPlay" >
             <img src="/src/assets/icons/play.svg">
         </a>
-        <a href="#" class="song__actionConfig">
+        <a href="#" @click.prevent="showTplEditSong(song)" class="song__actionConfig">
             <img src="/src/assets/icons/config.svg">
         </a>
     </article>
@@ -62,6 +62,7 @@
                 'playThisSong',
                 'addToPlaylist',
                 'removeFromPlaylist',
+                'showTplEditSong'
             ]),
             hoverSong(boolean) {
                 this.songHovered = boolean;

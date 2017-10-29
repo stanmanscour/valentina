@@ -1,30 +1,54 @@
 <template>
-  <div class="shadow">
-  <div class="editSong">
-    <h3 class="editSong--title">Edit this song</h3>
-    <div class="editSong__form">
-      <div class="editSong__form__item">
-        <label class="editSong__form__item--label">Artiste:</label>
-        <input class="editSong__form__item--input" type="text" value="Lala &ce 667">
+  <div class="shadow" v-if="tplEditSongVisible">
+    <div class="editSong">
+      <h3 class="editSong--title">Edit this song</h3>
+      <div class="editSong__form">
+        <div class="editSong__form__item">
+          <label class="editSong__form__item--label">Artiste:</label>
+          <input class="editSong__form__item--input" type="text" :value="song.artist">
+        </div>
+        <div class="editSong__form__item">
+          <label class="editSong__form__item--label">Titre:</label>
+          <input class="editSong__form__item--input" type="text" :value="song.title">
+        </div>
+        <div class="editSong__form__item">
+          <label class="editSong__form__item--label">Genre:</label>
+          <input class="editSong__form__item--input" type="text" :value="song.genre">
+        </div>
+        <div class="editSong__form__poster">
+          <div class="editSong__form__poster--img" :style="{ backgroundImage: `url('${song.poster}')` }"> 
+            <!--  -->
+          </div>
+          <div class="editSong__form__poster__modify">
+            <input type="file">
+          </div>
+        </div>
+        <div class="editSong__form__submit">
+          <a @click="hideTplEditSong" href="#">Annuler</a>
+          <a href="#">Valider</a>
+        </div>
       </div>
-      <div class="editSong__form__item">
-        <label class="editSong__form__item--label">Artiste:</label>
-        <input class="editSong__form__item--input" type="text" value="Lala &ce 667">
-      </div>
-      <div class="editSong__form__item">
-        <label class="editSong__form__item--label">Artiste:</label>
-        <input class="editSong__form__item--input" type="text" value="Lala &ce 667">
-      </div>
-    </div>
-
-  </div>
-    
-    
+    </div>  
   </div>
 </template>
 
 <script>
+  import { mapGetters } from 'vuex';
+  import { mapActions } from 'vuex';
 
+  export default {
+    computed: {
+      ...mapGetters({
+        tplEditSongVisible: 'getTplEditSongVisible',
+        song: 'getEditSong'
+      }),
+    },
+    methods: {
+      ...mapActions([
+        'hideTplEditSong'
+      ])
+    }
+  }
 </script>
 
 <style lang="scss">
@@ -48,8 +72,6 @@
     position: fixed;
     top: 50%;
     left: 50%;
-    width: 360px;
-    height: 400px;
     z-index: 700;
     -webkit-transform: translate(-50%,-50%);
     -moz-transform: translate(-50%,-50%);
@@ -57,6 +79,8 @@
     -o-transform: translate(-50%,-50%);
     transform: translate(-50%,-50%);
     padding: 25px;
+    box-sizing: border-box;
+    width: 90%;
 
     &--title {
       @extend .val-font;
@@ -66,17 +90,58 @@
     }
 
     &__form {
-      margin-top: 40px;
+      margin-top: 30px;
       display: flex;
       flex-direction: column;
+      &__poster {
+        margin-top: 20px;
+
+        &--img {
+          width: 133px;
+          height: 133px;
+          background-color: #005d49;
+          border: 1px solid #025a48;
+          background-size: cover;
+        }
+        &__modify {
+          margin-top: 20px;
+          input {
+
+          }
+        }
+      }
       &__item {
         display: flex;
         flex-direction: row;
+        align-items: baseline;
+        margin-top: 7px;
+        margin-bottom: 7px;
         &--label {
-
+          @extend .val-font;
+          font-size: 12px;
+          color: white;
         }
         &--input {
+          @extend .val-font;
+          font-size: 20px;
+          width: 140px;
+          margin-left: 10px;
+          background-color: transparent;
+          border: none;
+          color: white;
+        }
+      }
+      &__submit {
+        margin-top: 40px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
 
+        a {
+          color: white;
+          @extend .val-font;
+          font-size: 14px;
+          text-decoration: none;
         }
       }
     }
