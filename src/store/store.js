@@ -2,7 +2,11 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import playlist from './modules/playlist';
 import msgError from './modules/msgError';
-import editSong from './modules/editSong';
+
+// crud
+import editSong from './modules/crud/editSong';
+import deleteSong from './modules/crud/deleteSong';
+import createSong from './modules/crud/createSong';
 
 Vue.use(Vuex);
 
@@ -26,6 +30,10 @@ export const store = new Vuex.Store({
     mutations: {
         playThisSong: (state, payload) => {
             state.currentSong = payload
+        },
+        searchIntoLibrary: (state, payload) => {
+            let string = payload;
+
         }
     },
     actions:  {
@@ -38,6 +46,8 @@ export const store = new Vuex.Store({
     modules: {
         playlist,
         msgError,
-        editSong
+        editSong,
+        deleteSong,
+        createSong
     }
 })
