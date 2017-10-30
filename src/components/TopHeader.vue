@@ -4,7 +4,10 @@
       <div class="topHeader__left">
         <img class="topHeader__left--logoMobile" src="src/assets/icons/logo-valentina.svg" alt="">
         <a class="topHeader__left--logoDesktop" href="#">valentina.io</a>
-        <a class="topHeader__left--navigationDesktop" href="#">-> explorer</a>
+        <div class="topHeader__left__navigationDesktop">
+          <router-link class="topHeader__left__navigationDesktop--explorer" to="explorer">explorer</router-link>
+          <router-link class="topHeader__left__navigationDesktop--library" to="library">bibliothèque</router-link>
+        </div>
       </div>
       <div class="topHeader__middle">
         <!-- bibliothèque -->
@@ -26,18 +29,21 @@
       <div class="addonHeader__search" v-if="searchVisible">
         <input class="addonHeader__search--input" type="text" placeholder="Rechercher dans la bibliothèque">
       </div>
+      <val-add-header v-if="false"></val-add-header>
     </div>
   </header>
 </template>
 
 <script>
+  import AddHeader from './AddHeader.vue';
+
   import { mapGetters } from 'vuex';
   import { mapActions } from 'vuex';
 
   export default {
     computed: {
       ...mapGetters({
-        searchVisible: 'getSearchVisible',
+        searchVisible: 'getSearchVisible'
       })
     },
     methods: {
@@ -45,8 +51,8 @@
         'toggleSearch'
       ])
     },
-    mounted(){
-      console.log(this.searchVisible);
+    components: {
+      valAddHeader: AddHeader
     }
   }
 </script>
@@ -97,16 +103,30 @@
           font-size: 16px;
         }
       }
-      &--navigationDesktop {
+      &__navigationDesktop {
         display: none;
         @extend .val-font;
 
         @media screen and (min-width: em(768)){
           display: flex;
-          font-size: 12px;
+          flex-direction: column;
+          display: flex;
           margin-left: 10px;
-          color: white;
-          text-decoration: none;
+          height: 50%;
+          justify-content: space-between;
+
+
+          &--explorer,
+          &--library {
+            font-size: 11px;
+            color: white;
+            opacity: 0.4;
+            text-decoration: none;
+
+            &.router-link-active {
+              opacity: 1;
+            }
+          }
         }
       }
     }
@@ -202,7 +222,6 @@
   .addonHeader {
     &__search {
       height: 60px;
-      //background-color: blue;
       display: flex;
       flex-direction: row;
       justify-content: center;

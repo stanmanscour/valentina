@@ -14,6 +14,19 @@ $val-background: #00A885;
     font-family: 'Lato';
 }
 
+.val-transparent-input {
+    font-weight: 500;
+    font-size: 23px;
+    height: 50px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    &::placeholder {
+        color: rgba(255, 255, 255, 0.45);
+    }
+}
+
 // inputs
 .val-form-group {
     height: 30px;
@@ -50,7 +63,6 @@ $val-background: #00A885;
 }
 
 // general 
-
 body {
     background-color: #00A885;
 }
