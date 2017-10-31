@@ -43,6 +43,9 @@
 </template>
 
 <script> 
+  import { mapActions } from 'vuex';
+  import { mapGetters } from 'vuex';
+
   export default {
     data(){
       return {
@@ -58,10 +61,17 @@
         }
       }
     },
-    methods: {
+    computed: {
+      ...mapGetters([
 
+      ])
+    },
+    methods: {
+      ...mapActions([
+        
+      ]),
       verifyUrl(){
-        //
+        // msgError
       },
       goUrl(){
         this.stepUrl = true;
