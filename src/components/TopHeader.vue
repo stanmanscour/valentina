@@ -13,7 +13,7 @@
         <!-- bibliothèque -->
 
         <template>
-          <a class="topHeader__middle--addLink" href="#">Ajouter <img src="src/assets/icons/white-add.svg"></a>
+          <a @click.prevent="toggleAdd" class="topHeader__middle--addLink" href="#">Ajouter <img src="src/assets/icons/white-add.svg"></a>
           <a @click.prevent="toggleSearch" class="topHeader__middle--searchLink" href="#">Rechercher <img src="src/assets/icons/white-research.svg"></a>
         </template>
         
@@ -29,7 +29,7 @@
       <div class="addonHeader__search" v-if="searchVisible">
         <input class="addonHeader__search--input" type="text" placeholder="Rechercher dans la bibliothèque">
       </div>
-      <val-add-header v-if="false"></val-add-header>
+      <val-add-header v-if="addVisible"></val-add-header>
     </div>
   </header>
 </template>
@@ -41,6 +41,11 @@
   import { mapActions } from 'vuex';
 
   export default {
+    data(){
+      return {
+        addVisible: false
+      }
+    },
     computed: {
       ...mapGetters({
         searchVisible: 'getSearchVisible'
@@ -49,7 +54,10 @@
     methods: {
       ...mapActions([
         'toggleSearch'
-      ])
+      ]),
+      toggleAdd(){
+        this.addVisible = !this.addVisible;
+      }
     },
     components: {
       valAddHeader: AddHeader
