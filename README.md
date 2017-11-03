@@ -1,6 +1,8 @@
 # valentina.io
 
-> Valentina.io est un outil pour centraliser et bookmarker la musique disponible sur les plateformes gratuites d’internet.
+> Valentina.io est un outil pour centraliser et bookmarker la musique disponible sur les plateformes gratuites d’internet. Design, intégration et développement par Stanislas Manscour
+
+! Ce projet est en cours de développement !
 
 ## Build Setup
 
