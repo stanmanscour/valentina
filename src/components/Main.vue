@@ -94,6 +94,7 @@
         this.songSrc = '';
       },
       
+
       research(string) { // recherche dans la collection de musique
 
         var newArr = this.fetchedSongs.filter( item => {
