@@ -21,8 +21,6 @@
 </template>
 
 <script>
-	import axios from '../axios-auth.js';
-
 	export default {
 		data(){
 			return {
@@ -40,28 +38,8 @@
 					password: this.password
 				}
 				console.log(formData);
-				axios.post('/users.json', formData)
-					.then(response => console.log(response))
-					.catch(error => console.log(error))
+				this.$store.dispatch('signup', {email: formData.email, password: formData.password})
 			}
-		},
-		created(){
-			axios.get('/users.json')
-					.then(response => {
-						console.log(response);
-						const data = response.data;
-						const users = [];
-						for (let key in data) {
-							const user = data[key];
-							console.log(user);
-							user.id = key;
-							users.push(user);
-						}
-						console.log(users);
-						this.responseEmail = users[0].email;
-					})
-					.catch(error => console.log(error))
-			
 		}
 	}
 </script>

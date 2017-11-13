@@ -1,7 +1,9 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+
 import playlist from './modules/playlist';
 import msgError from './modules/msgError';
+import auth from './modules/auth';
 
 // crud
 import editSong from './modules/crud/editSong';
@@ -48,6 +50,7 @@ export const store = new Vuex.Store({
         editSong,
         deleteSong,
         createSong,
-        searchLibrary
+        searchLibrary,
+        auth
     }
 })
