@@ -36,6 +36,7 @@
 
 <script>
   import AddHeader from './AddHeader.vue';
+  import axios from 'axios';
 
   import { mapGetters } from 'vuex';
   import { mapActions } from 'vuex';
@@ -61,6 +62,11 @@
     },
     components: {
       valAddHeader: AddHeader
+    },
+    created(){
+      axios.get('https://valentina-7c291.firebaseio.com/users.json')
+        .then(response => console.log(response))
+        .catch(error => console.log(error))
     }
   }
 </script>

@@ -3,35 +3,65 @@
 		<div class="val__intro">
 			<h1 class="val__intro--title">valentina.io</h1>
 			<p class="val__intro--desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis iaculis neque leo, id vulputate felis fringilla eu. Morbi dolor neque.</p>
+			<p>mail: {{ responseEmail }}</p>
 		</div>
 		<form class="val__signup__form">
 			<div class="val__signup__form__inputs">
-				<input type="text" name="email" v-model="user.mail" placeholder="Adresse email">
-				<input type="password" name="password" v-model="user.password" placeholder="Mot de passe">
+				<input type="text" name="pseudo" v-model="pseudo" placeholder="Pseudo">
+				<input type="text" name="email" v-model="email" placeholder="Adresse email">
+				<input type="password" name="password" v-model="password" placeholder="Mot de passe">
 				<input type="password" name="password" v-model="repeatPassword" placeholder="Répéter le mot de passe">
 			</div>
 			<div class="val__signup__form__actions">
 				<router-link class="val__signup__form__actions--else" to="/login">Déjà inscrit ? Connexion</router-link>
-				<a @click.prevent="signup" href="#" class="val__signup__form__actions--go">Inscription</a>
+				<a @click.prevent="submitSignup" href="#" class="val__signup__form__actions--go">Inscription</a>
 			</div>
 		</form>
 	</div>
 </template>
 
 <script>
+	import axios from '../axios-auth.js';
+
 	export default {
 		data(){
 			return {
-				user: {
-					mail: '',
-					password: '',
-				}
+				pseudo: '',
+				email: '',
+				password: '',
+				repeatPassword: '',
+				responseEmail: ''
 			}
 		},
 		methods: {
-			signup(){
-				console.log()
+			submitSignup(){
+				const formData = {
+					email: this.email,
+					password: this.password
+				}
+				console.log(formData);
+				axios.post('/users.json', formData)
+					.then(response => console.log(response))
+					.catch(error => console.log(error))
 			}
+		},
+		created(){
+			axios.get('/users.json')
+					.then(response => {
+						console.log(response);
+						const data = response.data;
+						const users = [];
+						for (let key in data) {
+							const user = data[key];
+							console.log(user);
+							user.id = key;
+							users.push(user);
+						}
+						console.log(users);
+						this.responseEmail = users[0].email;
+					})
+					.catch(error => console.log(error))
+			
 		}
 	}
 </script>
