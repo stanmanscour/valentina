@@ -1,6 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
+import {
+    store 
+} from './store/store.js';
+
 import About from './components/About.vue';
 import Main from './components/Main.vue';
 import Login from './components/Login.vue';
@@ -15,7 +19,14 @@ export const routes = [{
     component: Main,
     children: [{
         path: 'explorer',
-        component: Explorer
+        component: Explorer,
+        beforeEnter(to, from, next) {
+            if (store.state.idToken) {
+                next();
+            } else {
+                next('/login')
+            }
+        }
     }, {
         path: 'library',
         component: Library

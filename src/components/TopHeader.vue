@@ -20,7 +20,8 @@
         <!-- -->
       </div>
       <div class="topHeader__right">
-        <a class="topHeader__right--accountLink" href="#">Mon compte</a>
+        <a v-if="!auth" class="topHeader__right--accountLink" href="#">Mon compte</a>
+        <a v-if="auth" class="topHeader__right--accountLink" href="#">Hi {{ user.pseudo }}</a>
         <a class="topHeader__right--configLink" href="#"><img src="src/assets/icons/white-research.svg"></a>
       </div>
     </div>
@@ -44,12 +45,15 @@
   export default {
     data(){
       return {
-        addVisible: false
+        addVisible: false,
+
       }
     },
     computed: {
       ...mapGetters({
-        searchVisible: 'getSearchVisible'
+        searchVisible: 'getSearchVisible',
+        auth: 'isAuthenticated',
+        user: 'getUser'
       })
     },
     methods: {
@@ -64,9 +68,11 @@
       valAddHeader: AddHeader
     },
     created(){
-      axios.get('https://valentina-7c291.firebaseio.com/users.json')
-        .then(response => console.log(response))
-        .catch(error => console.log(error))
+      this.$store.dispatch('fetchUser');
+      console.log(this.pseudo);
+    },
+    mounted(){
+      console.log(this.pseudo);
     }
   }
 </script>

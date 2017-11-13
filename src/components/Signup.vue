@@ -3,7 +3,6 @@
 		<div class="val__intro">
 			<h1 class="val__intro--title">valentina.io</h1>
 			<p class="val__intro--desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis iaculis neque leo, id vulputate felis fringilla eu. Morbi dolor neque.</p>
-			<p>mail: {{ responseEmail }}</p>
 		</div>
 		<form class="val__signup__form">
 			<div class="val__signup__form__inputs">
@@ -28,17 +27,17 @@
 				email: '',
 				password: '',
 				repeatPassword: '',
-				responseEmail: ''
 			}
 		},
 		methods: {
 			submitSignup(){
 				const formData = {
+					pseudo: this.pseudo,
 					email: this.email,
 					password: this.password
 				}
 				console.log(formData);
-				this.$store.dispatch('signup', {email: formData.email, password: formData.password})
+				this.$store.dispatch('signup', formData)
 			}
 		}
 	}

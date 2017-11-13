@@ -6,7 +6,13 @@
   </div>
 </template>
 
-
+<script>
+  export default {
+    created(){
+      this.$store.dispatch('tryAutoLogin');
+    }
+  }
+</script>
 
 <style lang="scss">
   @import './assets/scss/reset.scss';
