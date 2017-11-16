@@ -20,8 +20,8 @@
         <!-- -->
       </div>
       <div class="topHeader__right">
-        <a v-if="!auth" class="topHeader__right--accountLink" href="#">Mon compte</a>
-        <a v-if="auth" class="topHeader__right--accountLink" href="#">Hi </a>
+        <router-link to="/login" v-if="!auth" class="topHeader__right--accountLink" href="#">Se connecter</router-link>
+        <a v-if="auth" class="topHeader__right--accountLink" href="#">Hi {{ userName }}</a>
         <a class="topHeader__right--configLink" href="#"><img src="src/assets/icons/white-research.svg"></a>
       </div>
     </div>
@@ -54,7 +54,10 @@
         searchVisible: 'getSearchVisible',
         auth: 'isAuthenticated',
         user: 'getUser'
-      })
+      }),
+      userName(){
+        return this.$store.getters.user ? this.$store.getters.user.pseudo : 'pseudo'
+      },
     },
     methods: {
       ...mapActions([
@@ -67,9 +70,7 @@
     components: {
       valAddHeader: AddHeader
     },
-    created(){
-      //this.$store.dispatch('fetchConnectedUser');
-    }
+
   }
 </script>
 

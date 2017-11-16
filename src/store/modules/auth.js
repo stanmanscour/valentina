@@ -11,9 +11,6 @@ const state = {
 }
 
 const getters = {
-    // getErrorMsg: state => {
-    //     return state.errorMessage;
-    // },
     getUser(state) {
         return state.user;
     },
@@ -65,7 +62,6 @@ const actions = {
                         dispatch('fetchConnectedUser');
                     })
                     .catch(err => console.log(err));
-                router.push('/library')
             })
             .catch(error => console.log(error))
     },
@@ -92,7 +88,7 @@ const actions = {
                 localStorage.setItem('token', response.data.idToken);
                 localStorage.setItem('userId', response.data.localId);
 
-                router.push('/library')
+
             })
             .catch(error => console.log(error))
     },
@@ -105,7 +101,9 @@ const actions = {
         localStorage.removeItem('userId');
     },
     tryAutoLogin({
-        commit
+        commit,
+        state,
+        dispatch
     }) {
         const token = localStorage.getItem('token');
         if (!token) {
@@ -113,9 +111,11 @@ const actions = {
         }
         const userId = localStorage.getItem('userId');
         commit('authUser', {
-            token: token,
-            userId: userId
-        })
+                token: token,
+                userId: userId
+            }),
+            dispatch("fetchConnectedUser", state.userId);
+
     },
     storeUser({
         commit,
@@ -141,11 +141,9 @@ const actions = {
         }
         userData.id = state.userId;
         delete userData.password;
-        axios.put('/users/' + state.userId + '.json', userData)
+        axios.put('/users/' + state.userId + '.json' + '?auth=' + state.idToken, userData)
             .then(response => {
-                if (state.firstConnexion) {
-                    dispatch("fetchConnectedUser", state.userId);
-                }
+                dispatch("fetchConnectedUser", state.userId);
             })
             .catch(err => {
                 console.log(err)
@@ -161,6 +159,7 @@ const actions = {
         axios.get('/users/' + state.userId + '.json')
             .then(response => {
                 commit('storeUser', response.data);
+                router.push('/library');
             })
             .catch(err => console.log(err))
     }
