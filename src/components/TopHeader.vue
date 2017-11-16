@@ -12,9 +12,12 @@
       <div class="topHeader__middle">
         <!-- bibliothèque -->
 
-        <template>
+        <template v-if="$route.path === '/library'">
           <a @click.prevent="toggleAdd" class="topHeader__middle--addLink" href="#">Ajouter <img src="src/assets/icons/white-add.svg"></a>
           <a @click.prevent="toggleSearch" class="topHeader__middle--searchLink" href="#">Rechercher <img src="src/assets/icons/white-research.svg"></a>
+        </template>
+        <template v-if="$route.path === '/explorer'">
+          <a @click.prevent="" class="topHeader__middle--addLink" href="#">Rechercher une playlist, un utilisateur <img src="src/assets/icons/white-research.svg"></a>
         </template>
         
         <!-- -->
