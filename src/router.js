@@ -2,8 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import {
-    store 
-} from './store/store.js';
+    store
+} from './store/store';
 
 import About from './components/About.vue';
 import Main from './components/Main.vue';
@@ -24,6 +24,7 @@ export const routes = [{
             if (store.state.idToken) {
                 next();
             } else {
+                console.log(store.state.idToken);
                 next('/login')
             }
         }

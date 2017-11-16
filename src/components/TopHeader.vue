@@ -21,7 +21,7 @@
       </div>
       <div class="topHeader__right">
         <a v-if="!auth" class="topHeader__right--accountLink" href="#">Mon compte</a>
-        <a v-if="auth" class="topHeader__right--accountLink" href="#">Hi {{ user.pseudo }}</a>
+        <a v-if="auth" class="topHeader__right--accountLink" href="#">Hi </a>
         <a class="topHeader__right--configLink" href="#"><img src="src/assets/icons/white-research.svg"></a>
       </div>
     </div>
@@ -68,11 +68,7 @@
       valAddHeader: AddHeader
     },
     created(){
-      this.$store.dispatch('fetchUser');
-      console.log(this.pseudo);
-    },
-    mounted(){
-      console.log(this.pseudo);
+      //this.$store.dispatch('fetchConnectedUser');
     }
   }
 </script>

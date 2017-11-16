@@ -6,7 +6,8 @@ import router from '../../router';
 const state = {
     idToken: null,
     userId: null,
-    user: null
+    user: null,
+    firstConnexion: null
 }
 
 const getters = {
@@ -23,8 +24,10 @@ const getters = {
 
 const mutations = {
     authUser(state, userData) {
+        console.log("connecté !");
         state.idToken = userData.token;
         state.userId = userData.userId;
+        console.log(state.userId);
     },
     storeUser(state, user) {
         state.user = user;
@@ -32,6 +35,9 @@ const mutations = {
     clearAuthData(state) {
         state.idToken = null;
         state.userId = null;
+    },
+    firstConnexion(state) {
+        state.firstConnexion = true;
     }
 }
 
@@ -40,6 +46,7 @@ const actions = {
         commit,
         dispatch
     }, authData) {
+        commit('firstConnexion');
         axiosAuth.post('/signupNewUser?key=AIzaSyCzcV6gWos5JE2WsIHG6gleiLqTJu99vCA', {
                 email: authData.email,
                 password: authData.password,
@@ -53,12 +60,20 @@ const actions = {
                 })
                 localStorage.setItem('token', response.data.idToken);
                 localStorage.setItem('userId', response.data.localId)
-                dispatch('storeUser', authData)
+                    //dispatch('storeUser', authData);
+                dispatch('putUser', authData)
+                    .then(response => {
+                        console.log("the data is authentified, sending " + state.userId + " to fetch connected");
+                        dispatch('fetchConnectedUser');
+                    })
+                    .catch(err => console.log(err));
+                router.push('/library')
             })
             .catch(error => console.log(error))
     },
     login({
-        commit
+        commit,
+        dispatch
     }, authData) {
         axiosAuth.post('/verifyPassword?key=AIzaSyCzcV6gWos5JE2WsIHG6gleiLqTJu99vCA', {
                 email: authData.email,
@@ -71,8 +86,15 @@ const actions = {
                     token: response.data.idToken,
                     userId: response.data.localId
                 });
+
+                // login
+                dispatch('fetchConnectedUser');
+
+                // local storage
                 localStorage.setItem('token', response.data.idToken);
-                localStorage.setItem('userId', response.data.localId)
+                localStorage.setItem('userId', response.data.localId);
+
+                console.log('user: ', state.user);
                 router.push('/library')
             })
             .catch(error => console.log(error))
@@ -105,14 +127,54 @@ const actions = {
         if (!state.idToken) {
             return
         }
+        //userData.id = state.userId;
         axios.post('/users.json' + '?auth=' + state.idToken, userData)
-            .then(response => console.log(response))
+            .then(response => {
+                console.log("storeUser");
+                console.log(response.data.name);
+            })
+            .catch(err => console.log(err))
+    },
+    putUser({
+        commit,
+        state,
+        dispatch
+    }, userData) {
+        if (!state.idToken) {
+            return
+        }
+        userData.id = state.userId;
+        axios.put('/users/' + state.userId + '.json', userData)
+            .then(response => {
+                console.log("storeUser by put");
+                if (state.firstConnexion) {
+                    dispatch("fetchConnectedUser", state.userId);
+                }
+            })
+            .catch(err => {
+                console.log("user not stored by put")
+                console.log(err)
+            })
+    },
+    fetchConnectedUser({
+        commit,
+        state
+    }) {
+        if (!state.idToken) {
+            return
+        }
+        axios.get('/users/' + state.userId + '.json')
+            .then(response => {
+                commit('storeUser', response.data);
+
+            })
             .catch(err => console.log(err))
     },
     fetchUser({
         commit,
         state
     }) {
+        console.log('state.userId', state.userId);
         if (!state.idToken) {
             return
         }
@@ -127,7 +189,7 @@ const actions = {
                     users.push(user);
                 }
                 console.log(users);
-                commit('storeUser', users[0])
+                //commit('storeUser', users[0])
             })
             .catch(err => console.log(err))
     }
