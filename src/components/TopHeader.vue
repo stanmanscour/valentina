@@ -21,8 +21,8 @@
       </div>
       <div class="topHeader__right">
         <router-link to="/login" v-if="!auth" class="topHeader__right--accountLink" href="#">Se connecter</router-link>
-        <a v-if="auth" class="topHeader__right--accountLink" href="#">Hi {{ userName }}</a>
-        <a class="topHeader__right--configLink" href="#"><img src="src/assets/icons/white-research.svg"></a>
+        <a v-if="auth" class="topHeader__right--accountLink" href="#">Mon compte <img src="src/assets/icons/small-arrow-down.svg"></a>
+        <a class="topHeader__right--configLink" href="#"><img src="src/assets/icons/settings.svg"></a>
       </div>
     </div>
     
@@ -54,10 +54,7 @@
         searchVisible: 'getSearchVisible',
         auth: 'isAuthenticated',
         user: 'getUser'
-      }),
-      userName(){
-        return this.$store.getters.user ? this.$store.getters.user.pseudo : 'pseudo'
-      },
+      })
     },
     methods: {
       ...mapActions([
@@ -207,7 +204,7 @@
       }
 
       &--accountLink {
-        margin-right: 15px;
+        margin-right: 24px;
         display: flex;
         flex-direction: row;
         color: white;
@@ -217,7 +214,9 @@
         font-size: 12px;
 
         img {
-          margin-left: 7px;
+          margin-left: 5px;
+          width: 9px;
+          margin-top: 1px;
         }
       }
       &--configLink {
@@ -230,6 +229,7 @@
         font-size: 12px;
 
         img {
+          width: 22px;
           margin-left: 7px;
         }
       }

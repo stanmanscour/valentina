@@ -28,7 +28,7 @@
 
     <li class="menuMobile__itemLink">
       <a href="#" class="menuMobile__itemLink__link">
-        <img class="menuMobile__itemLink__link--icon" src="src/assets/icons/explorer.svg" alt="">
+        <img class="menuMobile__itemLink__link--icon" src="src/assets/icons/settings.svg" alt="">
         <span class="menuMobile__itemLink__link--title">réglages</span>
       </a>
     </li>
