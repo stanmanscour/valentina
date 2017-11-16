@@ -15,7 +15,8 @@ import searchLibrary from './modules/library/searchLibrary';
 
 Vue.use(Vuex);
 
-export const store = new Vuex.Store({
+export default new Vuex.Store({
+    //export const store = new Vuex.Store({
     state: {
         currentSong: {
             "artist": "Travis Scott",

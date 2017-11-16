@@ -1,9 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import {
-    store
-} from './store/store';
+import store from './store/store';
 
 import About from './components/About.vue';
 import Main from './components/Main.vue';
@@ -13,6 +11,7 @@ import Explorer from './components/Explorer.vue';
 import Library from './components/Library.vue';
 
 Vue.use(VueRouter);
+console.log(store);
 
 export const routes = [{
     path: '',
@@ -20,12 +19,19 @@ export const routes = [{
     children: [{
         path: 'explorer',
         component: Explorer,
+        // beforeEnter(to, from, next) {
+        //     if (store.state.idToken) {
+        //         next();
+        //     } else {
+        //         console.log(store.state.idToken);
+        //         next('/login')
+        //     }
+        // }
         beforeEnter(to, from, next) {
-            if (store.state.idToken) {
-                next();
+            if (!store.getters.isAuthenticated) {
+                next('/login');
             } else {
-                console.log(store.state.idToken);
-                next('/login')
+                next();
             }
         }
     }, {
