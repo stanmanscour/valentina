@@ -27,7 +27,6 @@ const mutations = {
         console.log("connecté !");
         state.idToken = userData.token;
         state.userId = userData.userId;
-        console.log(state.userId);
     },
     storeUser(state, user) {
         state.user = user;
@@ -63,7 +62,6 @@ const actions = {
                     //dispatch('storeUser', authData);
                 dispatch('putUser', authData)
                     .then(response => {
-                        console.log("the data is authentified, sending " + state.userId + " to fetch connected");
                         dispatch('fetchConnectedUser');
                     })
                     .catch(err => console.log(err));
@@ -94,7 +92,6 @@ const actions = {
                 localStorage.setItem('token', response.data.idToken);
                 localStorage.setItem('userId', response.data.localId);
 
-                console.log('user: ', state.user);
                 router.push('/library')
             })
             .catch(error => console.log(error))
@@ -130,7 +127,6 @@ const actions = {
         //userData.id = state.userId;
         axios.post('/users.json' + '?auth=' + state.idToken, userData)
             .then(response => {
-                console.log("storeUser");
                 console.log(response.data.name);
             })
             .catch(err => console.log(err))
@@ -144,15 +140,14 @@ const actions = {
             return
         }
         userData.id = state.userId;
+        delete userData.password;
         axios.put('/users/' + state.userId + '.json', userData)
             .then(response => {
-                console.log("storeUser by put");
                 if (state.firstConnexion) {
                     dispatch("fetchConnectedUser", state.userId);
                 }
             })
             .catch(err => {
-                console.log("user not stored by put")
                 console.log(err)
             })
     },
@@ -166,30 +161,6 @@ const actions = {
         axios.get('/users/' + state.userId + '.json')
             .then(response => {
                 commit('storeUser', response.data);
-
-            })
-            .catch(err => console.log(err))
-    },
-    fetchUser({
-        commit,
-        state
-    }) {
-        console.log('state.userId', state.userId);
-        if (!state.idToken) {
-            return
-        }
-        axios.get('/users.json' + '?auth=' + state.idToken)
-            .then(response => {
-                console.log(response);
-                const data = response.data;
-                const users = [];
-                for (let key in data) {
-                    const user = data[key];
-                    user.id = key;
-                    users.push(user);
-                }
-                console.log(users);
-                //commit('storeUser', users[0])
             })
             .catch(err => console.log(err))
     }
