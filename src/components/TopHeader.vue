@@ -5,8 +5,8 @@
         <img class="topHeader__left--logoMobile" src="src/assets/icons/logo-valentina.svg" alt="">
         <a class="topHeader__left--logoDesktop" href="#">valentina.io</a>
         <div class="topHeader__left__navigationDesktop">
-          <router-link class="topHeader__left__navigationDesktop--explorer" to="explorer">explorer</router-link>
-          <router-link class="topHeader__left__navigationDesktop--library" to="library">bibliothèque</router-link>
+          <router-link class="topHeader__left__navigationDesktop--explorer" to="explorer">Explorer</router-link>
+          <router-link class="topHeader__left__navigationDesktop--library" to="library">Bibliothèque</router-link>
         </div>
       </div>
       <div class="topHeader__middle">
@@ -98,7 +98,7 @@
     justify-content: space-between;
 
     &__left {
-      width: 33%;
+      width: 63%;
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -125,23 +125,42 @@
         @extend .val-font;
 
         @media screen and (min-width: em(768)){
+          flex-direction: row;
           display: flex;
-          flex-direction: column;
-          display: flex;
-          margin-left: 10px;
-          height: 50%;
+          margin-left: 20px;
+          height: 100%;
+          align-items: center;
           justify-content: space-between;
 
 
           &--explorer,
           &--library {
-            font-size: 11px;
+            font-size: 12px;
             color: white;
             opacity: 0.4;
             text-decoration: none;
+            margin-right: 5px;
+            margin-left: 5px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
 
             &.router-link-active {
               opacity: 1;
+              position: relative; 
+
+              &:after {
+                display: inline-block;
+                content: '';
+                width: 100%;
+                position: absolute;
+                bottom: 0px;
+                height: 3px;
+                left: 0px;
+                background-color: white;
+              }
             }
           }
         }
@@ -199,7 +218,7 @@
       display: none;
     
       @media screen and (min-width: em(768)){
-        width: 33%;
+        width: 63%;
         display: flex;
         flex-direction: row;
         justify-content: flex-end;
