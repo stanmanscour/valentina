@@ -9,6 +9,7 @@ import Login from './components/Login.vue';
 import Signup from './components/Signup.vue';
 import Explorer from './components/Explorer.vue';
 import Library from './components/Library.vue';
+import Account from './components/Account.vue';
 
 Vue.use(VueRouter);
 
@@ -28,6 +29,9 @@ export const routes = [{
     }, {
         path: 'library',
         component: Library
+    }, {
+        path: 'account',
+        component: Account
     }]
 }, {
     path: '/about',

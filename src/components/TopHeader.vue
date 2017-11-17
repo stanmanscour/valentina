@@ -87,9 +87,9 @@
     top: 0px;
     left: 0px;
     width: 100%;
-    box-shadow: 1px 5px 20px 0px rgba(1, 107, 85, 0.16);
-    background-color: #00a884;
-        z-index: 350;
+    box-shadow: 1px 5px 20px 0px rgba(1, 107, 85, 0.10);
+    background-color: #019B7B;
+    z-index: 350;
   }
 
   .topHeader {
