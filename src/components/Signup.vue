@@ -6,20 +6,41 @@
 		</div>
 		<form class="val__signup__form">
 			<div class="val__signup__form__inputs">
-				<input type="text" name="email" placeholder="Adresse email">
-				<input type="password" name="password" placeholder="Mot de passe">
-				<input type="password" name="password" placeholder="Répéter le mot de passe">
+				<input type="text" name="pseudo" v-model="pseudo" placeholder="Pseudo">
+				<input type="text" name="email" v-model="email" placeholder="Adresse email">
+				<input type="password" name="password" v-model="password" placeholder="Mot de passe">
+				<input type="password" name="password" v-model="repeatPassword" placeholder="Répéter le mot de passe">
 			</div>
 			<div class="val__signup__form__actions">
 				<router-link class="val__signup__form__actions--else" to="/login">Déjà inscrit ? Connexion</router-link>
-				<router-link class="val__signup__form__actions--go" to="/">Inscription</router-link>
+				<a @click.prevent="submitSignup" href="#" class="val__signup__form__actions--go">Inscription</a>
 			</div>
 		</form>
 	</div>
 </template>
 
 <script>
-	
+	export default {
+		data(){
+			return {
+				pseudo: '',
+				email: '',
+				password: '',
+				repeatPassword: '',
+			}
+		},
+		methods: {
+			submitSignup(){
+				const formData = {
+					pseudo: this.pseudo,
+					email: this.email,
+					password: this.password
+				}
+				console.log(formData);
+				this.$store.dispatch('signup', formData)
+			}
+		}
+	}
 </script>
 
 <style lang="scss">

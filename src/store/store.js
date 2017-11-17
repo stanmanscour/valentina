@@ -1,12 +1,26 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+
 import playlist from './modules/playlist';
 import msgError from './modules/msgError';
-import editSong from './modules/editSong';
+import auth from './modules/auth';
+
+// crud
+import editSong from './modules/crud/editSong';
+import deleteSong from './modules/crud/deleteSong';
+import createSong from './modules/crud/createSong';
+
+// library 
+import searchLibrary from './modules/library/searchLibrary';
+import librarySongs from './modules/library/librarySongs';
+
+// explorer
+import searchExplorer from './modules/explorer/searchExplorer';
 
 Vue.use(Vuex);
 
-export const store = new Vuex.Store({
+export default new Vuex.Store({
+    //export const store = new Vuex.Store({
     state: {
         currentSong: {
             "artist": "Travis Scott",
@@ -38,6 +52,12 @@ export const store = new Vuex.Store({
     modules: {
         playlist,
         msgError,
-        editSong
+        editSong,
+        deleteSong,
+        createSong,
+        searchLibrary,
+        librarySongs,
+        searchExplorer,
+        auth
     }
 })

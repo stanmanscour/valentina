@@ -6,7 +6,25 @@
   </div>
 </template>
 
-
+<script>
+  export default {
+    created(){
+      this.$store.dispatch('tryAutoLogin');
+    },
+    computed: {
+      user(){
+        return this.$store.getters.getUser;
+      }
+    },
+    watch: {
+      user(value){
+        if (value !== null && value !== undefined){
+          // console.log(value);
+        }
+      }
+    }
+  }
+</script>
 
 <style lang="scss">
   @import './assets/scss/reset.scss';

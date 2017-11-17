@@ -12,6 +12,9 @@
   import Vue from 'vue';
   import Collection from './Collection.vue';
 
+  import { mapGetters } from 'vuex';
+  import { mapActions } from 'vuex';
+
   export default {
     components: {
       valCollection: Collection
@@ -21,7 +24,16 @@
         fetchedSongs: []
       }
     },
+    computed: {
+      ...mapGetters({
+        getLibrarySongs: 'librarySongs/getLibrarySongs'
+      })
+      
+    },
     methods: {
+      ...mapActions({
+        initLibrary: 'librarySongs/initLibrary'
+      }),
       getSongsFromDb() { // fetch songs from the db
         this.fetchedSongs = [];
         this.$http.get('https://valentina-7c291.firebaseio.com/songs.json').then(response => {
@@ -38,6 +50,13 @@
     },
     created(){
       this.getSongsFromDb();
+
+      let vm = this;
+      setTimeout(vm.initLibrary, 4000);
+      setTimeout(function(){
+        console.log(vm.getLibrarySongs);
+      }, 6000);
+      //this.fetchSongs();
     }
   }
 </script>

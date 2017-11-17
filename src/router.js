@@ -1,3 +1,8 @@
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+
+import store from './store/store';
+
 import About from './components/About.vue';
 import Main from './components/Main.vue';
 import Login from './components/Login.vue';
@@ -5,12 +10,21 @@ import Signup from './components/Signup.vue';
 import Explorer from './components/Explorer.vue';
 import Library from './components/Library.vue';
 
+Vue.use(VueRouter);
+
 export const routes = [{
     path: '',
     component: Main,
     children: [{
         path: 'explorer',
-        component: Explorer
+        component: Explorer,
+        beforeEnter(to, from, next) {
+            if (!store.getters.isAuthenticated) {
+                next('/login');
+            } else {
+                next();
+            }
+        }
     }, {
         path: 'library',
         component: Library
@@ -25,3 +39,8 @@ export const routes = [{
     path: '/signup',
     component: Signup
 }];
+
+export default new VueRouter({
+    routes,
+    //mode: 'history'
+});

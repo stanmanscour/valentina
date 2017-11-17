@@ -1,21 +1,14 @@
 import Vue from 'vue';
-import VueRouter from 'vue-router';
 import VueResource from 'vue-resource';
 import App from './App.vue';
-import {
-    routes
-} from './routes';
-import {
-    store
-} from './store/store';
+import router from './router';
+import axios from 'axios';
 
-Vue.use(VueRouter);
+import store from './store/store';
+
+axios.defaults.baseURL = 'https://valentina-7c291.firebaseio.com'
+
 Vue.use(VueResource);
-
-const router = new VueRouter({
-    routes,
-    //mode: 'history'
-});
 
 export const EventBus = new Vue();
 
