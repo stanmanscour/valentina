@@ -12,6 +12,7 @@ import createSong from './modules/crud/createSong';
 
 // library 
 import searchLibrary from './modules/library/searchLibrary';
+import librarySongs from './modules/library/librarySongs';
 
 // explorer
 import searchExplorer from './modules/explorer/searchExplorer';
@@ -55,6 +56,7 @@ export default new Vuex.Store({
         deleteSong,
         createSong,
         searchLibrary,
+        librarySongs,
         searchExplorer,
         auth
     }
