@@ -36,7 +36,7 @@
       <div class="addonHeader__explorerSearch" v-if="searchExplorerVisible && $route.path === '/explorer'">
         <input class="addonHeader__explorerSearch--input" type="text" placeholder="Rechercher une playlist, un utilisateur...">
       </div>
-      <val-add-header v-if="addVisible"></val-add-header>
+      <val-add-header v-if="addVisible && $route.path === '/library'"></val-add-header>
     </div>
   </header>
 </template>
