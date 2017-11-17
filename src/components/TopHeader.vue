@@ -14,10 +14,10 @@
 
         <template v-if="$route.path === '/library'">
           <a @click.prevent="toggleAdd" class="topHeader__middle--addLink" href="#">Ajouter <img src="src/assets/icons/white-add.svg"></a>
-          <a @click.prevent="toggleSearch" class="topHeader__middle--searchLink" href="#">Rechercher <img src="src/assets/icons/white-research.svg"></a>
+          <a @click.prevent="toggleLibrarySearch" class="topHeader__middle--searchLink" href="#">Rechercher <img src="src/assets/icons/white-research.svg"></a>
         </template>
         <template v-if="$route.path === '/explorer'">
-          <a @click.prevent="" class="topHeader__middle--addLink" href="#">Rechercher une playlist, un utilisateur <img src="src/assets/icons/white-research.svg"></a>
+          <a @click.prevent="toggleExplorerSearch" class="topHeader__middle--addLink" href="#">Rechercher une playlist, un utilisateur <img src="src/assets/icons/white-research.svg"></a>
         </template>
         
         <!-- -->
@@ -30,8 +30,11 @@
     </div>
     
     <div class="addonHeader">
-      <div class="addonHeader__search" v-if="searchVisible">
-        <input class="addonHeader__search--input" type="text" placeholder="Rechercher dans la bibliothèque">
+      <div class="addonHeader__librarySearch" v-if="searchLibraryVisible && $route.path === '/library'">
+        <input class="addonHeader__librarySearch--input" type="text" placeholder="Rechercher une musique...">
+      </div>
+      <div class="addonHeader__explorerSearch" v-if="searchExplorerVisible && $route.path === '/explorer'">
+        <input class="addonHeader__explorerSearch--input" type="text" placeholder="Rechercher une playlist, un utilisateur...">
       </div>
       <val-add-header v-if="addVisible"></val-add-header>
     </div>
@@ -54,15 +57,17 @@
     },
     computed: {
       ...mapGetters({
-        searchVisible: 'getSearchVisible',
+        searchLibraryVisible: 'searchLibrary/getSearchVisible',
+        searchExplorerVisible: 'searchExplorer/getSearchVisible',
         auth: 'isAuthenticated',
         user: 'getUser'
       })
     },
     methods: {
-      ...mapActions([
-        'toggleSearch'
-      ]),
+      ...mapActions({
+        toggleLibrarySearch: 'searchLibrary/toggleSearch',
+        toggleExplorerSearch: 'searchExplorer/toggleSearch'
+      }),
       toggleAdd(){
         this.addVisible = !this.addVisible;
       }
@@ -189,7 +194,8 @@
         font-size: 12px;
 
         @media screen and (min-width: em(768)){
-          margin-right: 20px;
+          margin-left: 5px;
+          margin-right: 5px;
         }
 
         img {
@@ -206,7 +212,8 @@
         font-size: 12px;
 
         @media screen and (min-width: em(768)){
-          margin-left: 20px;
+          margin-left: 5px;
+          margin-right: 5px;
         }
 
         img {
@@ -259,7 +266,30 @@
   }
 
   .addonHeader {
-    &__search {
+    &__librarySearch {
+      height: 60px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+
+      &--input {
+        width: 90%;
+        font-weight: 500;
+        font-size: 23px;
+        height: 80%;
+        background-color: transparent;
+        border: none;
+        outline: none;
+        color: white;
+        text-align: center;
+
+        &::placeholder {
+          color: rgba(255, 255, 255, 0.45);
+        }
+      }
+    }
+    &__explorerSearch {
       height: 60px;
       display: flex;
       flex-direction: row;
