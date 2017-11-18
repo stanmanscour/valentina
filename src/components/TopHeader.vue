@@ -24,8 +24,8 @@
       </div>
       <div class="topHeader__right">
         <router-link to="/login" v-if="!auth" class="topHeader__right--accountLink" href="#">Se connecter</router-link>
-        <a v-if="auth" class="topHeader__right--accountLink" href="#">Mon compte <img src="src/assets/icons/small-arrow-down.svg"></a>
-        <a class="topHeader__right--configLink" href="#"><img src="src/assets/icons/settings.svg"></a>
+        <router-link to="/account" v-if="auth" class="topHeader__right--accountLink" href="#">Mon compte</router-link>
+        <!-- <a class="topHeader__right--configLink" href="#"><img src="src/assets/icons/settings.svg"></a> -->
       </div>
     </div>
     
@@ -233,7 +233,7 @@
       }
 
       &--accountLink {
-        margin-right: 24px;
+        //margin-right: 24px;
         display: flex;
         flex-direction: row;
         color: white;
@@ -241,12 +241,28 @@
         @extend .val-font;
         align-items: center;
         font-size: 12px;
+        height: 100%;
 
-        img {
-          margin-left: 5px;
-          width: 9px;
-          margin-top: 1px;
-        }
+        &.router-link-active {
+              opacity: 1;
+              position: relative; 
+
+              &:after {
+                display: inline-block;
+                content: '';
+                width: 100%;
+                position: absolute;
+                bottom: 0px;
+                height: 3px;
+                left: 0px;
+                background-color: white;
+              }
+            }
+        // img {
+        //   margin-left: 5px;
+        //   width: 9px;
+        //   margin-top: 1px;
+        // }
       }
       &--configLink {
         display: flex;

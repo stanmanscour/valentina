@@ -15,22 +15,23 @@
       </router-link>
     </li>
 
-    
+    <!--
     <li class="menuMobile__itemLink">
       <a href="#" class="menuMobile__itemLink__link">
         <img class="menuMobile__itemLink__link--icon" src="src/assets/icons/white-research.svg" alt="">
         <span class="menuMobile__itemLink__link--title">profil</span>
       </a>
     </li>
+    -->
 
     
     
 
     <li class="menuMobile__itemLink">
-      <a href="#" class="menuMobile__itemLink__link">
+      <router-link to="/account" class="menuMobile__itemLink__link">
         <img class="menuMobile__itemLink__link--icon" src="src/assets/icons/settings.svg" alt="">
         <span class="menuMobile__itemLink__link--title">réglages</span>
-      </a>
+      </router-link>
     </li>
 
 

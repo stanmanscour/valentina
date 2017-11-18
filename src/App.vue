@@ -19,7 +19,7 @@
     watch: {
       user(value){
         if (value !== null && value !== undefined){
-          // console.log(value);
+          console.log(value);
         }
       }
     }
