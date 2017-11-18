@@ -37,7 +37,7 @@
 					password: this.password
 				}
 				console.log(formData);
-				this.$store.dispatch('signup', formData)
+				this.$store.dispatch('signup/signup', formData)
 			}
 		}
 	}

@@ -7,6 +7,10 @@ const state = {
     firstConnexion: null
 }
 
+const getters = {
+
+}
+
 const mutations = {
     firstConnexion(state) {
         state.firstConnexion = true;
@@ -37,42 +41,57 @@ const actions = {
                 localStorage.setItem('userId', response.data.localId)
 
                 // spécifique signup
-                dispatch('/putUser', authData, {
+                dispatch('signup/putUser', authData, {
                         root: true
                     })
                     .then(response => {
-                        dispatch('user/fetchConnectedUser', null, {
-                            root: true
-                        });
+
                     })
-                    .catch(err => console.log(err));
+                    .catch(error => console.log(error));
             })
             .catch(error => console.log(error))
     },
     putUser({
         commit,
         state,
-        dispatch,
-        rootState
+        rootState,
+        dispatch
     }, userData) {
-        if (!state.idToken) {
+        if (!rootState.user.idToken) {
             return
         }
-        userData.id = rootState.userId;
+        console.log("put user 2");
+        userData.id = rootState.user.userId;
         delete userData.password;
-        axios.put('/users/' + rootState.userId + '.json' + '?auth=' + rootState.idToken, userData)
+        axios.put('/users/' + rootState.user.userId + '.json' + '?auth=' + rootState.user.idToken, userData)
             .then(response => {
-                //dispatch("user/fetchConnectedUser", rootState.userId);
+                //dispatch("signup/createPlaylist");
+                dispatch('user/fetchConnectedUser', null, {
+                    root: true
+                });
+                console.log('hey');
             })
             .catch(err => {
                 console.log(err)
             })
     },
+    createPlaylist({
+        commit,
+        state,
+        rootState
+    }) {
+        axios.post('/playlists.json', {})
+            .then(res => {
+                console.log(res.data);
+            })
+            .catch(err => console.log(err))
+    }
 
 }
 
 export default {
     namespaced: true,
+    getters,
     state,
     mutations,
     actions

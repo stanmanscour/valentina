@@ -28,6 +28,7 @@ const mutations = {
         state.userId = userData.userId;
     },
     storeUser(state, user) {
+        console.log("3. store user");
         state.user = user;
     },
     clearAuthData(state) {
@@ -44,8 +45,10 @@ const actions = {
         if (!state.idToken) {
             return
         }
+        console.log("2. fetchConnectedUser");
         axios.get('/users/' + state.userId + '.json')
             .then(response => {
+                console.log(response.data);
                 commit('user/storeUser', response.data, {
                     root: true
                 });
