@@ -9,11 +9,11 @@
 <script>
   export default {
     created(){
-      this.$store.dispatch('tryAutoLogin');
+      this.$store.dispatch('signin/tryAutoLogin');
     },
     computed: {
       user(){
-        return this.$store.getters.getUser;
+        return this.$store.getters['user/getUser'];
       }
     },
     watch: {

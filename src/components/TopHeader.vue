@@ -59,8 +59,9 @@
       ...mapGetters({
         searchLibraryVisible: 'searchLibrary/getSearchVisible',
         searchExplorerVisible: 'searchExplorer/getSearchVisible',
-        auth: 'isAuthenticated',
-        user: 'getUser'
+        user: 'user/getUser',
+        auth: 'user/isAuthenticated',
+        
       })
     },
     methods: {

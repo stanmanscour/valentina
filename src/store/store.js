@@ -3,7 +3,11 @@ import Vuex from 'vuex';
 
 import playlist from './modules/playlist';
 import msgError from './modules/msgError';
-import auth from './modules/auth';
+//import auth from './modules/auth';
+import signup from './modules/auth/signup'
+import signin from './modules/auth/signin'
+import logout from './modules/auth/logout'
+import user from './modules/auth/user'
 
 // crud
 import editSong from './modules/crud/editSong';
@@ -58,6 +62,10 @@ export default new Vuex.Store({
         searchLibrary,
         librarySongs,
         searchExplorer,
-        auth
+        //auth
+        signin,
+        signup,
+        logout,
+        user
     }
 })

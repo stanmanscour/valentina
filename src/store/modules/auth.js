@@ -53,13 +53,16 @@ const actions = {
             })
             .then(response => {
                 console.log(response)
-                commit('authUser', {
+
+                const data = {
                     token: response.data.idToken,
                     userId: response.data.localId
-                })
+                }
+                commit('authUser', data)
+
                 localStorage.setItem('token', response.data.idToken);
                 localStorage.setItem('userId', response.data.localId)
-                    //dispatch('storeUser', authData);
+
                 dispatch('putUser', authData)
                     .then(response => {
                         dispatch('fetchConnectedUser');

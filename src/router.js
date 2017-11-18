@@ -20,7 +20,7 @@ export const routes = [{
         path: 'explorer',
         component: Explorer,
         beforeEnter(to, from, next) {
-            if (!store.getters.isAuthenticated) {
+            if (!store.getters['user/isAuthenticated']) {
                 next('/login');
             } else {
                 next();
