@@ -6,11 +6,11 @@
         <h1>Informations personnelles</h1>
         <div class="form-group-text">
           <label for="">Pseudonyme</label>
-          <input type="text" placeholder="minizero">
+          <input type="text" v-model="user.pseudo" placeholder="Pseudonyme">
         </div>
         <div class="form-group-text">
           <label for="">Adresse email</label>
-          <input type="text" placeholder="stan.manscour@gmail.com">
+          <input type="text" v-model="user.email" placeholder="Adresse email">
         </div>
       </article>
       <article class="val__account__reglages__playlistConfig">
@@ -27,8 +27,14 @@
 
 <script>
 
+  import { mapGetters } from 'vuex';
 
   export default {
+    computed: {
+      ...mapGetters({
+        user: 'user/getUser',
+      })
+    },
     methods: {
       logout(){
         this.$store.dispatch('logout/logout');
