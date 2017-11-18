@@ -3,7 +3,8 @@ import Vuex from 'vuex';
 
 import playlist from './modules/playlist';
 import msgError from './modules/msgError';
-//import auth from './modules/auth';
+
+// auth
 import signup from './modules/auth/signup'
 import signin from './modules/auth/signin'
 import logout from './modules/auth/logout'
@@ -24,7 +25,6 @@ import searchExplorer from './modules/explorer/searchExplorer';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-    //export const store = new Vuex.Store({
     state: {
         currentSong: {
             "artist": "Travis Scott",
@@ -62,7 +62,6 @@ export default new Vuex.Store({
         searchLibrary,
         librarySongs,
         searchExplorer,
-        //auth
         signin,
         signup,
         logout,
