@@ -4,10 +4,10 @@ const actions = {
     logout({
         commit
     }) {
-        commit('user/clearAuthData', {
+        commit('user/clearAuthData', null, {
             root: true
         });
-        router.replace('/signin');
+        router.replace('/signup');
         localStorage.removeItem('token');
         localStorage.removeItem('userId');
     }
