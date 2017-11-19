@@ -75,7 +75,7 @@
     .song {
         border-radius: 2px;
         transition: opacity .3s ease;
-        opacity: 0.8;
+        //opacity: 0.8;
         // margin: 10px;
         width: 100%;
         height: 100%;
@@ -90,7 +90,7 @@
         @media screen and (min-width: 768px) {}
         &__background {
             transition: all .3s ease;
-            filter: brightness(40%);
+            //filter: brightness(40%);
             background-size: cover;
             position: absolute;
             left: 0px;
@@ -201,24 +201,37 @@
             }
         }
         &__shadow {
+            // position: absolute;
+            // filter: blur(1px);
+            // left: -30px;
+            // right: -30px;
+            // background-color: rgba(0, 0, 0, 0.17);
+            // bottom: -50px;
+            // height: 50px;
+            // opacity: 0;
+            // transition: all .3s ease;
             position: absolute;
-            filter: blur(1px);
-            left: -30px;
-            right: -30px;
-            background-color: rgba(0, 0, 0, 0.17);
-            bottom: -50px;
-            height: 50px;
-            opacity: 0;
+            z-index: 0;
+            background-color: rgba(0, 125, 100, 0.95);
+            //background-color: rgba(0, 0, 0, 0.75);
+            height: 350px;
+            width: 100px;
+            
+            bottom: -229px;
+            transform: rotate(-90deg);
             transition: all .3s ease;
+
+
+            
         }
         &.active {
             opacity: 1;
             .song__background {
-                filter: brightness(70%);
+                //filter: brightness(70%);
             }
             .song__info__title {
                 bottom: 30px;
-                text-shadow: 2px 2px 7px rgba(0, 0, 0, 0.48)
+                text-shadow: 2px 2px 7px rgba(0, 0, 0, 0.68)
             }
             .song__actionPlay {
                 bottom: 15px;
@@ -237,9 +250,11 @@
                 opacity: 1;
             }
             .song__shadow {
-                opacity: 1;
-                bottom: -10px;
-                filter: blur(14px);
+                // opacity: 1;
+                // bottom: -10px;
+                // filter: blur(14px);
+                bottom: -144px;
+                transform: rotate(-80deg);
             }
         }
     }

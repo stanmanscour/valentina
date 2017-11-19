@@ -84,6 +84,7 @@ const actions = {
         commit
     }) => {
         console.log('ended');
+        // dispatch add counter
         // dispatch next song
     },
     playNextSong: ({
