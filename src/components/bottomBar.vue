@@ -10,6 +10,7 @@
           <span class="bottomBar__player__names--artist">{{ currentSong.artist }}</span>
         </p>
       </div>
+      <a href="#" class="bottomBar__player__link">youtube</a>
       <div class="bottomBar__player__action">
         
         <a @click.prevent="resume" v-if="isPaused && !isPlaying" href="#" class="bottomBar__player__action--play"><img src="/src/assets/icons/play.svg"></a>
@@ -29,7 +30,7 @@
 
     <val-playlist></val-playlist>
 
-    <div class="bottomBar__iframe" style=""> <!-- visibility: hidden; -->
+    <div class="bottomBar__iframe" style="visibility: hidden;"> <!--  -->
       <val-youtube-player v-if="currentSong.media === 'youtube'"></val-youtube-player>
       <val-soundcloud-player v-if="currentSong.media === 'soundcloud'"></val-soundcloud-player>
       
@@ -160,6 +161,19 @@
           font-size: 15px;
           font-weight: 200;
           line-height: 15px;
+        }
+      }
+      &__link {
+        display: none;
+        @extend .val-font;
+        color: #024f3f;
+
+        @media screen and (min-width: em(768)){
+          display: inline;
+          margin-top: 3px;
+          font-size: 13px;
+          margin-left: 7px;
+          text-decoration: none;
         }
       }
       &__action {
