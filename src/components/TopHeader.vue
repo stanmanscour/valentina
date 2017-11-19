@@ -159,6 +159,10 @@
             justify-content: center;
             align-items: center;
             height: 100%;
+            
+            &:hover {
+              opacity: 0.7;
+            }
 
             &.router-link-active {
               opacity: 1;
@@ -250,6 +254,10 @@
         align-items: center;
         font-size: 12px;
         height: 100%;
+
+        &:hover {
+          opacity: 0.7;
+        }
 
         &.router-link-active {
               opacity: 1;

@@ -10,7 +10,8 @@
           <span class="bottomBar__player__names--artist">{{ currentSong.artist }}</span>
         </p>
       </div>
-      <a href="#" class="bottomBar__player__link">youtube</a>
+      <a v-if="currentSong.media === 'youtube'" target="_blank" :href="'https://www.youtube.com/watch?v='+currentSong.src" class="bottomBar__player__link">youtube</a>
+
       <div class="bottomBar__player__action">
         
         <a @click.prevent="resume" v-if="isPaused && !isPlaying" href="#" class="bottomBar__player__action--play"><img src="/src/assets/icons/play.svg"></a>
@@ -170,8 +171,8 @@
 
         @media screen and (min-width: em(768)){
           display: inline;
-          margin-top: 3px;
-          font-size: 13px;
+          margin-top: 5px;
+          font-size: 11px;
           margin-left: 7px;
           text-decoration: none;
         }

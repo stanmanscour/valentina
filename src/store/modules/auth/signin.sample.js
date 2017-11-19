@@ -7,7 +7,7 @@ const actions = {
         commit,
         dispatch
     }, authData) {
-        axiosAuth.post('/verifyPassword?key=AIzaSyCzcV6gWos5JE2WsIHG6gleiLqTJu99vCA', {
+        axiosAuth.post('/verifyPassword?key=', {
                 email: authData.email,
                 password: authData.password,
                 returnSecureToken: true
