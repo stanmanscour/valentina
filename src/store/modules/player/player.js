@@ -43,7 +43,7 @@ const mutations = {
 }
 
 const actions = {
-    playThisSong: ({
+    playThis: ({
         state,
         commit
     }, payload) => {
@@ -87,7 +87,14 @@ const actions = {
         state,
         commit
     }) => {
+        console.log('ended');
         // dispatch next song
+    },
+    playNextSong: ({
+        state,
+        commit
+    }) => {
+
     }
 }
 

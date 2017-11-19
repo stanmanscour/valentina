@@ -28,16 +28,21 @@ const actions = {
     showTplEditSong: ({
         commit
     }, payload) => {
-        commit('showTplEditSong', payload);
+        commit('editSong/showTplEditSong', payload, {
+            root: true
+        });
     },
     hideTplEditSong: ({
         commit
     }, payload) => {
-        commit('hideTplEditSong', payload);
+        commit('editSong/hideTplEditSong', payload, {
+            root: true
+        });
     }
 }
 
 export default {
+    namespaced: true,
     state,
     getters,
     mutations,

@@ -58,12 +58,12 @@
             }
         },
         methods: {
-            ...mapActions([
-                'playThisSong',
-                'addToPlaylist',
-                'removeFromPlaylist',
-                'showTplEditSong'
-            ]),
+            ...mapActions({
+                playThisSong: 'player/playThis',
+                addToPlaylist: 'player/addToPlaylist',
+                removeFromPlaylist: 'player/removeFromPlaylist',
+                showTplEditSong: 'editSong/showTplEditSong'
+            }),
             hoverSong(boolean) {
                 this.songHovered = boolean;
             }

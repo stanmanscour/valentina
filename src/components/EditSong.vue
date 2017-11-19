@@ -39,14 +39,14 @@
   export default {
     computed: {
       ...mapGetters({
-        tplEditSongVisible: 'getTplEditSongVisible',
-        song: 'getEditSong'
+        tplEditSongVisible: 'editSong/getTplEditSongVisible',
+        song: 'editSong/getEditSong'
       }),
     },
     methods: {
-      ...mapActions([
-        'hideTplEditSong'
-      ])
+      ...mapActions({
+        hideTplEditSong: 'editSong/hideTplEditSong'
+      })
     }
   }
 </script>
