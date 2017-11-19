@@ -4,6 +4,9 @@ import Vuex from 'vuex';
 import playlist from './modules/playlist';
 import msgError from './modules/msgError';
 
+import player from './modules/player/player'
+import youtubePlayer from './modules/player/youtubePlayer'
+
 // auth
 import signup from './modules/auth/signup'
 import signin from './modules/auth/signin'
@@ -65,6 +68,8 @@ export default new Vuex.Store({
         signin,
         signup,
         logout,
-        user
+        user,
+        player,
+        youtubePlayer
     }
 })

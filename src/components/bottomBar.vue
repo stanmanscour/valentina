@@ -11,8 +11,11 @@
         </p>
       </div>
       <div class="bottomBar__player__action">
-        <a @click.prevent="resume" v-if="!currentlyPlaying" href="#" class="bottomBar__player__action--play"><img src="/src/assets/icons/play.svg"></a>
-        <a @click.prevent="pause" v-if="currentlyPlaying" href="#" class="bottomBar__player__action--pause"><img src="/src/assets/icons/pause.svg"></a>
+        
+        <a @click.prevent="resume" v-if="isPaused && !isPlaying" href="#" class="bottomBar__player__action--play"><img src="/src/assets/icons/play.svg"></a>
+        <a @click.prevent="pause" v-if="isPlaying" href="#" class="bottomBar__player__action--pause"><img src="/src/assets/icons/pause.svg"></a>
+        
+        
         <a @click.prevent="togglePlaylist" href="#" class="bottomBar__player__action__playlist">
           <template v-if="playlist.length > 0">
             <transition name="fade">
@@ -27,8 +30,10 @@
     <val-playlist></val-playlist>
 
     <div class="bottomBar__iframe" style=""> <!-- visibility: hidden; -->
-      <iframe v-if="currentSong.media === 'youtube'" class="player__youtube" id="ytplayer" type="text/html" width="300" height="300" :src="'https://www.youtube.com/embed/'+currentSong.src + '?rel=0&autoplay=1'" frameborder="0" />
-      <youtube @playing="playing" :player-vars="{ autoplay: 1 }" @ready="ready" :video-id="currentSong.src"></youtube>
+      <val-youtube-player v-if="currentSong.media === 'youtube'"></val-youtube-player>
+      <val-soundcloud-player v-if="currentSong.media === 'soundcloud'"></val-soundcloud-player>
+      
+      <!-- <iframe class="player__youtube" id="ytplayer" type="text/html" width="300" height="300" :src="'https://www.youtube.com/embed/'+currentSong.src + '?rel=0&autoplay=1'" frameborder="0" /> -->
       <iframe v-if="currentSong.media === 'soundcloud'" class="player__soundcloud" width="100%" height="450" scrolling="no" frameborder="no" :src="'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/'+currentSong.src"></iframe>
     </div>
   </div>
@@ -39,53 +44,37 @@
   import { mapGetters } from 'vuex';
   import { mapActions } from 'vuex';
 
-  import VueYouTubeEmbed from 'vue-youtube-embed'
-  import Vue from 'vue';
-
+  import SoundcloudPlayer from './player/SoundcloudPlayer.vue'
+  import YoutubePlayer from './player/YoutubePlayer.vue'
   import Playlist from './Playlist.vue';
-
-  Vue.use(VueYouTubeEmbed)
 
   export default {
     data() {
       return {
-        playlistOpen: false,
-        paused: false,
-        currentlyPlaying: false
+        playlistOpen: false
       }
     },
     computed: {
       ...mapGetters({
-        currentSong: 'getCurrentSong',
-        playlist: 'getPlaylist'
+        currentSong: 'player/getCurrentSong',
+        playlist: 'getPlaylist',
+        isPlaying: 'player/isPlaying',
+        isPaused: 'player/isPaused'
       })
     },
     methods: {
-      ...mapActions([]),
+      ...mapActions({
+        pause: 'youtubePlayer/pause',
+        resume: 'youtubePlayer/resume'
+      }),
       togglePlaylist(){
         this.playlistOpen = !this.playlistOpen;
-      },
-      ready(player){
-        this.player = player;
-      },
-      playing(player){
-        this.currentlyPlaying = true;
-      },
-      isPlaying(){
-        return this.currentlyPlaying;
-      },
-      pause () {
-        this.currentlyPlaying = false;
-        this.player.pauseVideo();
-      },
-      resume () {
-        this.player.playVideo();
-      },
-      
-
+      }
     },
     components: {
-      valPlaylist: Playlist
+      valPlaylist: Playlist,
+      valYoutubePlayer: YoutubePlayer,
+      valSoundcloudPlayer: SoundcloudPlayer
     }
   }
 </script>

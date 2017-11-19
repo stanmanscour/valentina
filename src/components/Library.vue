@@ -7,7 +7,6 @@
     <template v-if="!currentLibrary">
       <h1>Je recherche la musique</h1>
     </template>
-    
     <template v-else>
       <val-collection :songCollection="songs"></val-collection>
     </template>
