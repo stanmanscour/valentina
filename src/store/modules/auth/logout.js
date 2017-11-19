@@ -7,6 +7,9 @@ const actions = {
         commit('user/clearAuthData', null, {
             root: true
         });
+        commit('librarySongs/clearLibrary', null, {
+            root: true
+        })
         router.replace('/signup');
         localStorage.removeItem('token');
         localStorage.removeItem('userId');

@@ -5,6 +5,9 @@
         <val-edit-song></val-edit-song>
     </transition>
 
+    <template v-if="currentLibrary.songs == undefined || currentLibrary.songs == null">
+        Il n'y a pas encore de musique, ajoutez-en.
+    </template>
     <template v-if="songCollection.length > 1">
         <ul class="songCollection__collection" v-masonry transition-duration="0.3s" item-selector=".songCollection__collection__item">
             <li class="songCollection__collection__item" v-masonry-tile v-for="(song, index) in songCollection" :style="{ height: calculateHeight(song.counter) }">
@@ -12,9 +15,7 @@
             </li>
         </ul>
     </template>
-    <template v-else>
-        Pas de musique
-    </template>
+    
         
         
     </section>
@@ -25,13 +26,19 @@
     import Song from './SongTpl.vue';
     import EditSong from './editSong.vue';
     import VueMasonryPlugin from 'vue-masonry';
+    import { mapGetters } from 'vuex';
     
     Vue.use(VueMasonryPlugin);
-    
+
     export default {
         components: {
             valSong: Song,
             valEditSong: EditSong
+        },
+        computed: {
+            ...mapGetters({
+                currentLibrary: 'librarySongs/getCurrentLibrary'
+            })
         },
         methods: {
             getCount(){

@@ -1,12 +1,12 @@
 import axios from 'axios'
 
 const state = {
-    librarySongs: null
+    library: null
 }
 
 const getters = {
-    getLibrarySongs: state => {
-        return state.librarySongs;
+    getCurrentLibrary: state => {
+        return state.library;
     },
     getUserId: (state, rootGetters) => {
         const user = rootGetters.getUser;
@@ -17,7 +17,10 @@ const getters = {
 
 const mutations = {
     fetchSongs: (state, songs) => {
-        state.librarySongs = songs
+        state.library = songs
+    },
+    clearLibrary: (state) => {
+        state.library = null
     }
 }
 
@@ -33,7 +36,6 @@ const actions = {
         if (!rootState.user.idToken) {
             return;
         }
-        console.log(rootState.user.user.playlist)
         const playlistId = rootState.user.user.playlist;
         dispatch('librarySongs/fetchSongs', playlistId, {
             root: true
@@ -45,18 +47,11 @@ const actions = {
         rootGetters,
         rootState
     }, playlistId) => {
-        // + '?auth=' + rootGetters.getIdToken
-        console.log('/playlists/' + playlistId + '.json');
         axios.get('/playlists/' + playlistId + '.json')
             .then(response => {
-                // const songs = [];
-                // const data = response.data;
-                // for (let key in data) {
-                //     let song = data[key];
-                //     songs.push(song);
-                // }
-                // commit('fetchSongs', songs);
-                console.log(response.data);
+                commit('librarySongs/fetchSongs', response.data, {
+                    root: true
+                })
             })
             .catch(err => console.log(err))
     }

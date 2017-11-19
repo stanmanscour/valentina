@@ -4,7 +4,13 @@
 	    <h1 class="val__intro--title">Ma bibliothèque</h1>
 	    <p class="val__intro--desc">Lorem ipsum dolor sit amet, consectetur adipiscing</p>
 	  </div>
-	  <val-collection :songCollection="songs"></val-collection>
+    <template v-if="!currentLibrary">
+      <h1>Je recherche la musique</h1>
+    </template>
+    
+    <template v-else>
+      <val-collection :songCollection="songs"></val-collection>
+    </template>
   </div>
 </template>
 
@@ -24,11 +30,17 @@
         fetchedSongs: []
       }
     },
+    watch: {
+      currentLibrary(value){
+        if (value == null && value == undefined){
+          return false;
+        }
+      }
+    },
     computed: {
       ...mapGetters({
-        getLibrarySongs: 'librarySongs/getLibrarySongs'
+        currentLibrary: 'librarySongs/getCurrentLibrary'
       })
-      
     },
     methods: {
       ...mapActions({
@@ -54,7 +66,7 @@
       let vm = this;
       setTimeout(vm.initLibrary, 4000);
       setTimeout(function(){
-        console.log(vm.getLibrarySongs);
+        console.log(vm.currentLibrary);
       }, 6000);
       //this.fetchSongs();
     }

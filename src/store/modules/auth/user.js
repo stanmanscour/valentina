@@ -33,6 +33,8 @@ const mutations = {
     clearAuthData(state) {
         state.idToken = null;
         state.userId = null;
+        state.user = null;
+
     },
     storePlaylistSignup(playlistId) {
         state.user.playlist = playlistId;
