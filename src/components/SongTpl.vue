@@ -22,9 +22,16 @@
                 <img src="/src/assets/icons/playlist.svg">
             </a>
         </template>
-        <a href="#" @click.prevent="playThisSong(song)" class="song__actionPlay" >
-            <img src="/src/assets/icons/play.svg">
-        </a>
+        <template v-if="songStatus !== 'playing'">
+            <a href="#" @click.prevent="playThisSong(song)" class="song__actionPlay" >
+                <img src="/src/assets/icons/play.svg">
+            </a>
+        </template>
+        <template v-else>
+            <a href="#" @click.prevent="" class="song__actionPause" >
+                <img src="/src/assets/icons/pause.svg">
+            </a>
+        </template>
         <a href="#" @click.prevent="showTplEditSong(song)" class="song__actionConfig">
             <img src="/src/assets/icons/config.svg">
         </a>
@@ -45,8 +52,19 @@
         props: ['song'],
         computed: {
             ...mapGetters({
-                playlist: 'playlist/getPlaylist'
+                playlist: 'playlist/getPlaylist',
+                currentSong: 'player/getCurrentSong',
+                playing: 'player/isPlaying',
+                paused: 'player/isPaused',
+                buffering: 'player/isBuffering'
             }),
+            songStatus(){
+                if (this.currentSong.src === this.song.src){
+                    if (this.playing || this.buffering ){
+                        return 'playing';
+                    }
+                }
+            },
             checkIntoPlaylist(){
                 let isIn = this.playlist.indexOf(this.song);
                 if (isIn === -1 ){
@@ -167,6 +185,28 @@
                 width: 100%;
             }
         }
+        &__actionPause {
+            z-index: 30;
+            position: absolute;
+            right: 15px;
+            bottom: -45px;
+            height: 38px;
+            width: 38px;
+            opacity: 0;
+            transition: all .3s ease;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+
+            &:hover {
+                transform: scale(1.2);
+                cursor: pointer;
+            }
+            img {
+                width: 12px;
+            }
+        }
         &__actionPlaylist {
             width: 23px;
             height: 23px;
@@ -213,16 +253,11 @@
             position: absolute;
             z-index: 0;
             background-color: rgba(0, 125, 100, 0.95);
-            //background-color: rgba(0, 0, 0, 0.75);
             height: 350px;
             width: 100px;
-            
             bottom: -229px;
             transform: rotate(-90deg);
             transition: all .3s ease;
-
-
-            
         }
         &.active {
             opacity: 1;
@@ -234,6 +269,10 @@
                 text-shadow: 2px 2px 7px rgba(0, 0, 0, 0.68)
             }
             .song__actionPlay {
+                bottom: 15px;
+                opacity: 1;
+            }
+            .song__actionPause {
                 bottom: 15px;
                 opacity: 1;
             }

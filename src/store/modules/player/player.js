@@ -10,6 +10,7 @@ const state = {
     },
     playing: null,
     paused: null,
+    buffering: null
 }
 
 const getters = {
@@ -21,6 +22,9 @@ const getters = {
     },
     isPlaying: state => {
         return state.playing
+    },
+    isBuffering: state => {
+        return state.buffering
     }
 }
 
@@ -28,9 +32,16 @@ const mutations = {
     paused: (state) => {
         state.paused = true;
         state.playing = false;
+        state.buffering = false;
     },
     playing: (state) => {
         state.playing = true;
+        state.paused = false;
+        state.buffering = false;
+    },
+    buffering: (state, boolean) => {
+        state.buffering = true;
+        state.playing = false;
         state.paused = false;
     },
     playThisSong: (state, payload) => {

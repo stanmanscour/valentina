@@ -27,6 +27,14 @@ const actions = {
             root: true
         })
     },
+    buffering({
+        commit,
+        state
+    }) {
+        commit('player/buffering', true, {
+            root: true
+        })
+    },
     resume({
         state,
         commit

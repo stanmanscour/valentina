@@ -4,6 +4,7 @@
     @ready="isReady"
     @paused="isPaused"
     @ended="isEnded"
+    @buffering="isBuffering"
     :player-vars="{ autoplay: 1 }"
     :video-id="song.src">
     </youtube>
@@ -41,6 +42,9 @@
       },
       isEnded() {
         this.$store.dispatch('player/ended');
+      },
+      isBuffering(){
+        this.$store.dispatch('youtubePlayer/buffering');
       }
     }
   }
