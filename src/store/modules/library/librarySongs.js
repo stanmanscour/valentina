@@ -24,31 +24,39 @@ const mutations = {
 const actions = {
 
     initLibrary: ({
-        dispatch,
-        getters,
-        rootGetters
+        commit,
+        state,
+        rootState,
+        dispatch
     }) => {
-        if (!rootGetters.isAuthenticated) {
+        console.log("init library");
+        if (!rootState.user.idToken) {
             return;
         }
-        const playlistId = rootGetters.getUser.playlist.id;
-        dispatch('fetchSongs', playlistId);
+        console.log(rootState.user.user.playlist)
+        const playlistId = rootState.user.user.playlist;
+        dispatch('librarySongs/fetchSongs', playlistId, {
+            root: true
+        });
     },
     fetchSongs: ({
         state,
         commit,
-        rootGetters
+        rootGetters,
+        rootState
     }, playlistId) => {
         // + '?auth=' + rootGetters.getIdToken
+        console.log('/playlists/' + playlistId + '.json');
         axios.get('/playlists/' + playlistId + '.json')
             .then(response => {
-                const songs = [];
-                const data = response.data;
-                for (let key in data) {
-                    let song = data[key];
-                    songs.push(song);
-                }
-                commit('fetchSongs', songs);
+                // const songs = [];
+                // const data = response.data;
+                // for (let key in data) {
+                //     let song = data[key];
+                //     songs.push(song);
+                // }
+                // commit('fetchSongs', songs);
+                console.log(response.data);
             })
             .catch(err => console.log(err))
     }

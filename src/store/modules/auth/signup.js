@@ -29,7 +29,6 @@ const actions = {
                 returnSecureToken: true
             })
             .then(response => {
-                console.log(response)
                 const data = {
                     token: response.data.idToken,
                     userId: response.data.localId
@@ -44,9 +43,7 @@ const actions = {
                 dispatch('signup/putUser', authData, {
                         root: true
                     })
-                    .then(response => {
-
-                    })
+                    //.then(response => console.log(response))
                     .catch(error => console.log(error));
             })
             .catch(error => console.log(error))
@@ -60,16 +57,13 @@ const actions = {
         if (!rootState.user.idToken) {
             return
         }
-        console.log("put user 2");
         userData.id = rootState.user.userId;
         delete userData.password;
         axios.put('/users/' + rootState.user.userId + '.json' + '?auth=' + rootState.user.idToken, userData)
             .then(response => {
-                //dispatch("signup/createPlaylist");
-                dispatch('user/fetchConnectedUser', null, {
+                dispatch("signup/createPlaylist", null, {
                     root: true
                 });
-                console.log('hey');
             })
             .catch(err => {
                 console.log(err)
@@ -78,11 +72,36 @@ const actions = {
     createPlaylist({
         commit,
         state,
-        rootState
+        rootState,
+        dispatch
     }) {
-        axios.post('/playlists.json', {})
+        const emptyPlaylist = {}
+        axios.post('/playlists.json', {
+                info: {
+                    author: rootState.user.userId
+                }
+            })
             .then(res => {
-                console.log(res.data);
+                const playlistId = res.data.name
+                dispatch('signup/storePlaylistId', playlistId, {
+                    root: true
+                })
+            })
+            .catch(err => console.log(err))
+    },
+    storePlaylistId({
+        commit,
+        state,
+        rootState,
+        dispatch
+    }, playlistId) {
+        axios.patch('/users/' + rootState.user.userId + '.json', {
+                'playlist': playlistId
+            })
+            .then(response => {
+                dispatch('user/fetchConnectedUser', null, {
+                    root: true
+                })
             })
             .catch(err => console.log(err))
     }

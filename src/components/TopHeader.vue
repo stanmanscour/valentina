@@ -76,6 +76,13 @@
     components: {
       valAddHeader: AddHeader
     },
+    watch: {
+      user(value){
+        if (value !== null && value !== undefined){
+          return '';
+        }
+      }
+    }
 
   }
 </script>
