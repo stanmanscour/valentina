@@ -1,5 +1,4 @@
 const state = {
-    playlist: [],
     currentSong: {
         "artist": "Travis Scott",
         "counter": 0,
@@ -14,9 +13,6 @@ const state = {
 }
 
 const getters = {
-    getPlaylist: state => {
-        return state.playlist;
-    },
     getCurrentSong: state => {
         return state.currentSong;
     },

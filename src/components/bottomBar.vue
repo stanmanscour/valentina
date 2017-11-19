@@ -57,7 +57,7 @@
     computed: {
       ...mapGetters({
         currentSong: 'player/getCurrentSong',
-        playlist: 'getPlaylist',
+        playlist: 'playlist/getPlaylist',
         isPlaying: 'player/isPlaying',
         isPaused: 'player/isPaused'
       })

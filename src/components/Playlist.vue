@@ -40,13 +40,13 @@
   export default {
     computed: {
       ...mapGetters({
-        playlist: 'getPlaylist'
+        playlist: 'playlist/getPlaylist'
       })
     },
     methods: {
-      ...mapActions([
-        'removeFromPlaylist'
-      ])
+      ...mapActions({
+        removeFromPlaylist: 'playlist/removeFromPlaylist'
+      })
     }
   }
 </script>

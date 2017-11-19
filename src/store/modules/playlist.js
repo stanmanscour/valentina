@@ -25,16 +25,21 @@ const actions = {
     addToPlaylist: ({
         commit
     }, payload) => {
-        commit("addToPlaylist", payload);
+        commit("playlist/addToPlaylist", payload, {
+            root: true
+        });
     },
     removeFromPlaylist: ({
         commit
     }, payload) => {
-        commit("removeFromPlaylist", payload);
+        commit("playlist/removeFromPlaylist", payload, {
+            root: true
+        });
     },
 }
 
 export default {
+    namespaced: true,
     state,
     getters,
     mutations,

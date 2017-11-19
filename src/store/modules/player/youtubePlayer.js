@@ -27,11 +27,6 @@ const actions = {
             root: true
         })
     },
-    play({
-
-    }) {
-
-    },
     resume({
         state,
         commit

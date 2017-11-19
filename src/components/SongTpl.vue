@@ -39,14 +39,13 @@
     export default {
         data: function() {
             return {
-                songHovered: false,
-                test: this.getPlaylist
+                songHovered: false
             }
         },
         props: ['song'],
         computed: {
             ...mapGetters({
-                playlist: 'getPlaylist'
+                playlist: 'playlist/getPlaylist'
             }),
             checkIntoPlaylist(){
                 let isIn = this.playlist.indexOf(this.song);
@@ -60,8 +59,8 @@
         methods: {
             ...mapActions({
                 playThisSong: 'player/playThis',
-                addToPlaylist: 'player/addToPlaylist',
-                removeFromPlaylist: 'player/removeFromPlaylist',
+                addToPlaylist: 'playlist/addToPlaylist',
+                removeFromPlaylist: 'playlist/removeFromPlaylist',
                 showTplEditSong: 'editSong/showTplEditSong'
             }),
             hoverSong(boolean) {
