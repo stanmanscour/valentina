@@ -8,6 +8,13 @@
     <template v-if="currentLibrary.songs == undefined || currentLibrary.songs == null">
         Il n'y a pas encore de musique, ajoutez-en.
     </template>
+    <template v-else>
+        <ul class="songCollection__collection" v-masonry transition-duration="0.3s" item-selector=".songCollection__collection__item">
+            <li class="songCollection__collection__item" v-masonry-tile v-for="(song, index) in currentLibrary.songs" :style="{ height: calculateHeight(song.counter) }">
+                <val-song :song="song" :index="index"></val-song>
+            </li>
+        </ul>
+    </template>
     <template v-if="songCollection.length > 1">
         <ul class="songCollection__collection" v-masonry transition-duration="0.3s" item-selector=".songCollection__collection__item">
             <li class="songCollection__collection__item" v-masonry-tile v-for="(song, index) in songCollection" :style="{ height: calculateHeight(song.counter) }">
