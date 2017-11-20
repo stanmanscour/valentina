@@ -32,7 +32,6 @@ const actions = {
         rootState,
         dispatch
     }) => {
-        console.log("init library");
         if (!rootState.user.idToken) {
             return;
         }
